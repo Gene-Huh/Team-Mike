@@ -1,24 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using SampleApi.DAL;
-using SampleApi.Providers.Security;
+using ProductApproval.DAL;
 
-namespace SampleApi
+namespace ProductApproval
 {
     /// <summary>
     /// The asp.net api startup class.
@@ -79,9 +73,10 @@ namespace SampleApi
                 });
 
             // Dependency Injection configuration
-            services.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(Configuration["JwtSecret"]));
-            services.AddSingleton<IPasswordHasher>(ph => new PasswordHasher());
-            services.AddTransient<IUserDAO>(m => new UserSqlDAO(Configuration.GetConnectionString("Default")));
+            //services.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(Configuration["JwtSecret"]));
+            //services.AddSingleton<IPasswordHasher>(ph => new PasswordHasher());
+
+            services.AddTransient<IProductDAO>(m => new ProductSqlDAO(Configuration.GetConnectionString("Default")));
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
