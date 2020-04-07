@@ -7,17 +7,23 @@
         <thead>
         <th>Number</th>
         <th>Default UOM</th>
-        <th>Is Sellable</th>
+        <th>Cross Reference</th>
+        <th>Manufacturer ID</th>
+        <th>Inventory Status</th>
+        <th>Alternative Products</th> 
         <th>Description</th>      
         </thead>
             <hr/>
         <tbody>
         <tr v-for="item in filteredProductsList"
         v-bind:key="item.id">
-        <td>{{item.productNumber}}</td>
-        <td>{{item.defaultUOM}}</td>
-        <td>{{item.isSellable}}</td>
-        <td>{{item.productDescription}}</td>
+        <td>{{item.ProductNumber}}</td>
+        <td>{{item.DefaultUOM}}</td>
+        <td>{{item.CrossReference}}</td>
+        <td>{{item.ManufacturerId}}</td>
+        <td>{{item.InventoryStatus}}</td>
+        <td>{{item.AlternativeProducts}}</td>
+        <td>{{item.ProductDescription}}</td>
         </tr>      
         </tbody>
     </table>
@@ -37,13 +43,13 @@
         computed: {
             approvedProductsList() {
                 return this.products.filter(product => {
-                    return product.isSellable==true;
+                    return product.IsSellable==true;
                 });
             },
             filteredProductsList() {
                 const filter = this.filterCriteria;
                 return this.products.filter(product => {
-                    return product.isSellable==filter;
+                    return product.IsSellable==filter;
                 });
             }
         },
