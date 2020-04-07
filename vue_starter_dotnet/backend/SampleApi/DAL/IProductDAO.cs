@@ -8,6 +8,8 @@ namespace ProductApproval.DAL
 {
     public interface IProductDAO
     {
+        
+
         IList<Product> GetAllApprovedProducts();
 
         IList<Product> GetAllUnapprovedProducts();

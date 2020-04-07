@@ -9,7 +9,7 @@ using ProductApproval.Models;
 
 namespace ProductApproval.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/products")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -23,7 +23,26 @@ namespace ProductApproval.Controllers
         [HttpGet]
         public IList<Product> GetAllProducts()
         {
-            return dao.GetAllProducts();
+
+            return dao.GetAllApprovedProducts();
+        }
+
+        [HttpGet("{isSellable}", Name = "GetProducts")]
+        public IList<Product> GetProducts(int isSellable)
+        {
+            
+            if(isSellable == 1)
+            {
+                return dao.GetAllApprovedProducts();
+            }
+            else 
+            {
+                return dao.GetAllUnapprovedProducts();
+            }  
+            //if(productList != null)
+            //{
+            //    return productList;
+            //}            
         }
     }
 }
