@@ -13,7 +13,7 @@ namespace ProductApprovalTests
         private TransactionScope trans;
 
         //Change this to correct DB
-        protected string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=NPGeek;Integrated Security=True";
+        protected string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=ProductApproval;Integrated Security=True";
 
         [TestInitialize]
         public void Setup()
