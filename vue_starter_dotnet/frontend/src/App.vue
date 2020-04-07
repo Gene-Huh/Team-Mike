@@ -2,8 +2,7 @@
   <div id="app">
     <header>
     <div id="nav">
-      <router-link to="/">Home</router-link>
-      <router-link to="/products"> </router-link>
+      <router-link to="/products">Products </router-link>
     </div>
     </header>
     <div class="content">
@@ -11,3 +10,13 @@
     </div>
   </div>
 </template>
+
+<script>
+
+export default {
+}
+</script>
+
+<style>
+
+</style>
