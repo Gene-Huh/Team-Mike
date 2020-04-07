@@ -9,7 +9,7 @@
     <div id="footer">
       <p>
       <a href="/privacy-policy/">Privacy Policy</a></p>
-      <div class="copy">© 2019 Sarnova, Inc.</div>  
+      <div class="copy">Copyright (c) 2020, Sarvova, Inc. All Rights Reserved</div>  
     </div>
     </div>
   </div>
