@@ -2,11 +2,15 @@
   <div id="app">
     <header>
     <div id="nav">
-      <router-link to="/products">Products </router-link>
     </div>
     </header>
     <div class="content">
     <router-view/>
+    <div id="footer">
+      <p>
+      <a href="/privacy-policy/">Privacy Policy</a></p>
+      <div class="copy">© 2019 Sarnova, Inc.</div>  
+    </div>
     </div>
   </div>
 </template>
@@ -18,5 +22,29 @@ export default {
 </script>
 
 <style>
+a {
+  color:  #f0ab00;
+}
+
+body { 
+background-color: #ffffff;
+background-repeat:repeat-all;
+background-position:center center;
+background-attachment:scroll;
+font-family:'Open sans', Arial, sans-serif;
+font-weight:400;font-size:14px; 
+line-height:22px; 
+margin: 0;
+ }
+    #app {
+      background-color: #004165;
+      color: #ffffff;
+      padding: 20px;
+    }
+    #footer{
+    padding: 1px 10px 10px 10px;
+    color: #d9d9d9;
+    background-color: #004165;
+    }   
 
 </style>

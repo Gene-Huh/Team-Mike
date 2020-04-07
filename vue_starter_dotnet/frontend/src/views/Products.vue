@@ -10,6 +10,7 @@
         <th>Is Sellable</th>
         <th>Description</th>      
         </thead>
+            <hr/>
         <tbody>
         <tr v-for="item in filteredProductsList"
         v-bind:key="item.id">
@@ -17,7 +18,7 @@
         <td>{{item.defaultUOM}}</td>
         <td>{{item.isSellable}}</td>
         <td>{{item.productDescription}}</td>
-        </tr>
+        </tr>      
         </tbody>
     </table>
     </div>
@@ -59,6 +60,19 @@
     };
 </script>
 
-<style>
-
+<style scoped>
+    hr {
+        border: 1px solid #f0ab00;
+    }
+    h1, th {
+        font-weight: 400;
+    }
+    button {
+        background-color: transparent;
+        border: 1px solid #bbbbbb;
+        color: #ffffff;
+        cursor: pointer;
+        margin: 0 5px 20px 0;
+        line-height: 18px;
+    }
 </style>
