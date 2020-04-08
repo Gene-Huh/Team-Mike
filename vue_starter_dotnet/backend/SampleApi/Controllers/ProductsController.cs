@@ -39,19 +39,19 @@ namespace ProductApproval.Controllers
             //}            
         }
 
-        [HttpGet("{ProductNumber}", Name = "GetProductNumber")]
-        public Product GetProductNumber(string productNumber)
-        {
-            if(productNumber!=null)
-            {
-                return dao.GetItemByProductNumber(productNumber);
+        //[HttpGet("{ProductNumber}", Name = "GetProductNumber")]
+        //public Product GetProductNumber(string productNumber)
+        //{
+        //    if(productNumber!=null)
+        //    {
+        //        return dao.GetItemByProductNumber(productNumber);
 
-            }
-            else
-            {
-                return new Product();
-            }
-        }
+        //    }
+        //    else
+        //    {
+        //        return new Product();
+        //    }
+        //}
 
     }
 }
