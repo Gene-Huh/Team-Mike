@@ -9,9 +9,10 @@ namespace ProductApproval.DAL
     public interface IProductDAO
     {
         
-
         IList<Product> GetAllApprovedProducts();
 
         IList<Product> GetAllUnapprovedProducts();
+
+        Product GetItemByProductNumber(string var);
     }
 }
