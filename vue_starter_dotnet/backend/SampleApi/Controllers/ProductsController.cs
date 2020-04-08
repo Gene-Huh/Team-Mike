@@ -46,7 +46,7 @@ namespace ProductApproval.Controllers
         {
             dao = dataAccessLayer;
         }
-
+        
         [HttpGet("{ProductNumber}", Name = "GetProductNumber")]
         public Product GetProductNumber(string productNumber)
         {

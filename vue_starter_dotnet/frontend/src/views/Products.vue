@@ -3,8 +3,10 @@
     <h1>List of Products</h1>
     <button v-on:click="getUnapprovedList()">Unapproved</button>
     <button v-on:click="getApprovedList()">Approved</button>
+    <button v-on:click="ConfirmChanges()">Confirm Changes</button>
     <table>
-        <thead>
+        <thead>  
+        <th>Select</th>
         <th>Number</th>
         <th>Default UOM</th>
         <th>Cross Reference</th>
@@ -17,6 +19,7 @@
         <tbody>
         <tr v-for="item in filteredProductsList"
         v-bind:key="item.id">
+        <td><input type="checkbox" @change="MarkSelected(item.productNumber)"></td>
         <td>{{item.productNumber}}</td>
         <td>{{item.defaultUOM}}</td>
         <td>{{item.crossReference}}</td>
@@ -37,7 +40,8 @@
             return {
                 API_URL: 'http://localhost:64458/api/products',
                 products: [],
-                filterCriteria: false
+                filterCriteria: false,
+                selectedItems: []
             }
         },
         computed: {
@@ -69,6 +73,7 @@
             })
             .then(products => {
                 this.products = products;
+                this.selectedItems = [];
                 return products;
             })
             .catch(err => console.log(err));
@@ -81,11 +86,44 @@
             })
             .then(products => {
                 this.products = products;
+                this.selectedItems = [];
                 return products;
             })
             .catch(err => console.log(err));
             },
-        } /* , 
+
+            MarkSelected(productNumber){
+                if (this.selectedItems.includes(productNumber)){
+                    let tempSelectedItems = this.selectedItems.filter(item => item !== productNumber);
+                    this.selectedItems = tempSelectedItems;
+                } else{
+                    this.selectedItems.push(productNumber);
+                } 
+                console.log(this.selectedItems);
+            },
+        //     ConfirmChanges(){
+        //         this.selectedItems.forEach(item => {     
+                
+        //         fetch(this.API_URL, {
+        //             method: 'PUT',
+        //             headers: {
+        //                 'Content-Type': 'application/json; charset=utf-8'
+        //             },
+        //             body: JSON.stringify(item)
+        //         })
+        //     .then(response => {
+
+        //         console.log(`SUCCESS ${response}`);
+        //     })
+        //     });
+        //     // .then(products => {
+        //     //     this.products = products;
+        //     // })
+        //     // .catch(err => console.log(err));
+        // } 
+                }
+
+         /* , 
         
         created() {
             fetch(this.API_URL)
