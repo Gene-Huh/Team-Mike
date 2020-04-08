@@ -39,10 +39,7 @@ namespace ProductApproval.Controllers
             {
                 return dao.GetAllUnapprovedProducts();
             }  
-            //if(productList != null)
-            //{
-            //    return productList;
-            //}            
+                      
         }
     }
 }
