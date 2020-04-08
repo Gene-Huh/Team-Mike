@@ -1,8 +1,8 @@
 <template>
     <div class='products-list'>
     <h1>List of Products</h1>
-    <button v-on:click="getUnapprovedList">Unapproved</button>
-    <button v-on:click="getApprovedList">Approved</button>
+    <button v-on:click="getUnapprovedList()">Unapproved</button>
+    <button v-on:click="getApprovedList()">Approved</button>
     <table>
         <thead>
         <th>Number</th>
@@ -35,7 +35,7 @@
         name: 'products',
         data() {
             return {
-                API_URL: 'https://5e86b771781e48001676b31e.mockapi.io/api/Products',
+                API_URL: 'http://localhost:64458/api/products',
                 products: [],
                 filterCriteria: false
             }
@@ -47,45 +47,46 @@
                 });
             }, */
             filteredProductsList() {
-/*                 const filter = this.filterCriteria;
+/*                const filter = this.filterCriteria;
                 if(filter){
-                    let approvedList = this.getApprovedList;
+                    let approvedList = this.getApprovedList();
                     return approvedList;
                 }
                 else {
                     return this.getUnapprovedList();
                 } */
-/*                 return this.products.filter(product => {
-                    return product.isSellable==filter; 
+/*                return this.products.filter(product => {
+                    return product.isSellable==filter;  
                 });*/
                 return this.products;
             }
         },
          methods: {
             getUnapprovedList() {
-                fetch(`${this.API_URL}/?isSellable=false`)
+                fetch(`${this.API_URL}/0`)
             .then(response => {
                 return response.json();
             })
             .then(products => {
                 this.products = products;
+                return products;
             })
             .catch(err => console.log(err));
             },
 
             getApprovedList() {
-                fetch(`${this.API_URL}/?isSellable=true`)
+                fetch(`${this.API_URL}/1`)
             .then(response => {
                 return response.json();
             })
             .then(products => {
                 this.products = products;
+                return products;
             })
             .catch(err => console.log(err));
             },
-        }, 
+        } /* , 
         
-
         created() {
             fetch(this.API_URL)
             .then(response => {
@@ -95,7 +96,7 @@
                 this.products = products;
             })
             .catch(err => console.log(err));
-        }
+        }  */
     };
 </script>
 
