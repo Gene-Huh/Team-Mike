@@ -20,12 +20,12 @@ namespace ProductApproval.Controllers
             dao = dataAccessLayer;
         }
 
-        [HttpGet]
+/*         [HttpGet]
         public IList<Product> GetAllProducts()
         {
 
             return dao.GetAllApprovedProducts();
-        }
+        } */
 
         [HttpGet("{isSellable}", Name = "GetProducts")]
         public IList<Product> GetProducts(int isSellable)

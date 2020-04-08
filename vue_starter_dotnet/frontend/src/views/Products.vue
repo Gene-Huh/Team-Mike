@@ -1,8 +1,8 @@
 <template>
     <div class='products-list'>
     <h1>List of Products</h1>
-    <button v-on:click="filterCriteria=false">Unapproved</button>
-    <button v-on:click="filterCriteria=true">Approved</button>
+    <button v-on:click="getUnapprovedList()">Unapproved</button>
+    <button v-on:click="getApprovedList()">Approved</button>
     <table>
         <thead>
         <th>Number</th>
@@ -17,13 +17,13 @@
         <tbody>
         <tr v-for="item in filteredProductsList"
         v-bind:key="item.id">
-        <td>{{item.ProductNumber}}</td>
-        <td>{{item.DefaultUOM}}</td>
-        <td>{{item.CrossReference}}</td>
-        <td>{{item.ManufacturerId}}</td>
-        <td>{{item.InventoryStatus}}</td>
-        <td>{{item.AlternativeProducts}}</td>
-        <td>{{item.ProductDescription}}</td>
+        <td>{{item.productNumber}}</td>
+        <td>{{item.defaultUOM}}</td>
+        <td>{{item.crossReference}}</td>
+        <td>{{item.manufacturerId}}</td>
+        <td>{{item.inventoryStatus}}</td>
+        <td>{{item.alternativeProducts}}</td>
+        <td>{{item.productDescription}}</td>
         </tr>      
         </tbody>
     </table>
@@ -35,24 +35,58 @@
         name: 'products',
         data() {
             return {
-                API_URL: 'https://5e86b771781e48001676b31e.mockapi.io/api/Products',
+                API_URL: 'http://localhost:64458/api/products',
                 products: [],
                 filterCriteria: false
             }
         },
         computed: {
-            approvedProductsList() {
+           /*  approvedProductsList() {
                 return this.products.filter(product => {
-                    return product.IsSellable==true;
+                    return product.isSellable==true;
                 });
-            },
+            }, */
             filteredProductsList() {
-                const filter = this.filterCriteria;
-                return this.products.filter(product => {
-                    return product.IsSellable==filter;
-                });
+/*                const filter = this.filterCriteria;
+                if(filter){
+                    let approvedList = this.getApprovedList();
+                    return approvedList;
+                }
+                else {
+                    return this.getUnapprovedList();
+                } */
+/*                return this.products.filter(product => {
+                    return product.isSellable==filter;  
+                });*/
+                return this.products;
             }
         },
+         methods: {
+            getUnapprovedList() {
+                fetch(`${this.API_URL}/0`)
+            .then(response => {
+                return response.json();
+            })
+            .then(products => {
+                this.products = products;
+                return products;
+            })
+            .catch(err => console.log(err));
+            },
+
+            getApprovedList() {
+                fetch(`${this.API_URL}/1`)
+            .then(response => {
+                return response.json();
+            })
+            .then(products => {
+                this.products = products;
+                return products;
+            })
+            .catch(err => console.log(err));
+            },
+        } /* , 
+        
         created() {
             fetch(this.API_URL)
             .then(response => {
@@ -62,7 +96,7 @@
                 this.products = products;
             })
             .catch(err => console.log(err));
-        }
+        }  */
     };
 </script>
 
