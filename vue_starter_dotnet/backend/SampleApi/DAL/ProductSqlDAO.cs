@@ -11,6 +11,7 @@ namespace ProductApproval.DAL
     public class ProductSqlDAO : IProductDAO
     {
         private readonly string connectionString;
+       
         private string getApprovedProductsSql = "SELECT * FROM ProductList WHERE isSellable = 1";
         private string getUnapprovedProductsSql = "SELECT * FROM ProductList WHERE isSellable = 0";
         private string getProductNumberSql = "SELECT * FROM ProductList WHERE ProductNumber = @ProductNumber";
@@ -99,6 +100,11 @@ namespace ProductApproval.DAL
 
             return product;
         }
+
+        //public void SwitchingIsSellable(Product product)
+        //{
+
+        //}
 
     }
 }

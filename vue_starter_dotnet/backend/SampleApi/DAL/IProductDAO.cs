@@ -14,5 +14,7 @@ namespace ProductApproval.DAL
         IList<Product> GetAllUnapprovedProducts();
 
         Product GetItemByProductNumber(string var);
+
+        //void SwitchingIsSellable(Product product);
     }
 }

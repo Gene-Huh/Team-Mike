@@ -24,25 +24,36 @@ namespace ProductApproval.Controllers
         [HttpGet("{isSellable}", Name = "GetProducts")]
         public IList<Product> GetProducts(int isSellable)
         {
-            
-            if(isSellable == 1)
+
+            if (isSellable == 1)
             {
                 return dao.GetAllApprovedProducts();
             }
-            else 
+            else
             {
                 return dao.GetAllUnapprovedProducts();
-            }  
-                      
+            }
+
+        }
+    }
+
+    [Route("api/item")]
+    public class ItemController : ControllerBase
+    {
+        private IProductDAO dao;
+
+        public ItemController(IProductDAO dataAccessLayer)
+        {
+            dao = dataAccessLayer;
         }
 
         [HttpGet("{ProductNumber}", Name = "GetProductNumber")]
         public Product GetProductNumber(string productNumber)
         {
-            if(productNumber!=null)
+
+            if (productNumber != null)
             {
                 return dao.GetItemByProductNumber(productNumber);
-
             }
             else
             {
@@ -50,5 +61,30 @@ namespace ProductApproval.Controllers
             }
         }
 
+        [HttpPut("{productNumber}")]
+        public ActionResult SwitchingIsSellable(string productNumber, Product product)
+        {
+            int isSellable = 0;
+            Product prodNum = dao.GetItemByProductNumber(productNumber);
+
+            if (prodNum != null)
+            {
+                if (prodNum.IsSellable == 0)
+                {
+                    isSellable = 1;
+                }
+                if (prodNum.IsSellable == 1)
+                {
+                    isSellable = 0;
+                }
+            }
+
+            prodNum.IsSellable = product.IsSellable;
+
+            //dao.SaveChanges(prodNum);
+
+            return NoContent();
+        }
     }
+
 }
