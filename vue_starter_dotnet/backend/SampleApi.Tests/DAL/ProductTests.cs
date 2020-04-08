@@ -14,38 +14,36 @@ namespace ProductApprovalTests.Tests
         private string addApprovedProductSql = "INSERT INTO ProductList (ProductNumber, ProductDescription, DefaultUOM, isSellable, CrossReference, ItemType, isDrugControlled, ManufacturerID, InventoryStatus, AlternativeProducts, isNonReturnable, isRefrigerated, isRegulated) VALUES ('123','generic product description','OH',1,'123',1,0,'INTERNATIONAL INC.','Buy','',0,0,0);";
         private string addUnapprovedProductSql = "INSERT INTO ProductList (ProductNumber, ProductDescription, DefaultUOM, isSellable, CrossReference, ItemType, isDrugControlled, ManufacturerID, InventoryStatus, AlternativeProducts, isNonReturnable, isRefrigerated, isRegulated) VALUES ('123','generic product description','OH',0,'123',1,0,'INTERNATIONAL INC.','Buy','',0,0,0);";
 
-        [TestMethod]
-        public void GetAllApprovedProductsTest()
+        [DataTestMethod]
+        [DataRow("isSellable", 1)]
+        public void GetAllApprovedProductsTest(string parameter, int value)
         {
-            int originalCount = GetRowCount("ProductList");
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand(addApprovedProductSql, conn);
-                cmd.ExecuteNonQuery();
-            }
-
             ProductSqlDAO dao = new ProductSqlDAO(connectionString);
             IList<Product> product = dao.GetAllApprovedProducts();
-            Assert.AreEqual(originalCount + 1, product.Count);
+            int testResult = product.Count;
+            int expectedResult = GetRowCountByBooleanParameter(parameter, value);
+            Assert.AreEqual(expectedResult, testResult);
         }
 
-        [TestMethod]
-        public void GetAllUnapprovedProductsTest()
+        [DataTestMethod]
+        [DataRow("isSellable", 0)]
+        public void GetAllUnapprovedProductsTest(string parameter, int value)
         {
-            //int originalCount = GetRowCount("ProductList");
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand(addUnapprovedProductSql, conn);
-                cmd.ExecuteNonQuery();
-            }
-
             ProductSqlDAO dao = new ProductSqlDAO(connectionString);
             IList<Product> product = dao.GetAllUnapprovedProducts();
-            Assert.AreEqual(1, product.Count);
+            int testResult = product.Count;
+            int expectedResult = GetRowCountByBooleanParameter(parameter, value);
+            Assert.AreEqual(expectedResult, testResult);
+        }
+
+        [DataTestMethod]
+        [DataRow("0221785", "0221785")]
+        public void GetItemByProductNumberTest(string productNumber, string expectedValue)
+        {
+            ProductSqlDAO dao = new ProductSqlDAO(connectionString);
+            Product item = dao.GetItemByProductNumber(productNumber);
+            expectedValue = item.ProductNumber;
+            Assert.AreEqual(productNumber, expectedValue);
         }
     }
 }

@@ -37,5 +37,17 @@ namespace ProductApprovalTests
                 return count;
             }
         }
+
+        protected int GetRowCountByBooleanParameter(string parameter, int value)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand($"SELECT COUNT(*) FROM ProductList WHERE {parameter} = {value}", conn);
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count;
+            }
+        }
+
     }
 }

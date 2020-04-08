@@ -20,12 +20,6 @@ namespace ProductApproval.Controllers
             dao = dataAccessLayer;
         }
 
-/*         [HttpGet]
-        public IList<Product> GetAllProducts()
-        {
-
-            return dao.GetAllApprovedProducts();
-        } */
 
         [HttpGet("{isSellable}", Name = "GetProducts")]
         public IList<Product> GetProducts(int isSellable)
@@ -44,5 +38,20 @@ namespace ProductApproval.Controllers
             //    return productList;
             //}            
         }
+
+        [HttpGet("{ProductNumber}", Name = "GetProductNumber")]
+        public Product GetProductNumber(string productNumber)
+        {
+            if(productNumber!=null)
+            {
+                return dao.GetItemByProductNumber(productNumber);
+
+            }
+            else
+            {
+                return new Product();
+            }
+        }
+
     }
 }
