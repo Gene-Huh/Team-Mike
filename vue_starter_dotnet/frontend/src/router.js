@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import auth from './auth'
 import Login from './views/Login.vue'
-import Products from './views/Products.vue'
+import ProductsList from './views/ProductsList.vue'
+import Home from './views/Home.vue'
 
 Vue.use(Router)
 
@@ -20,9 +21,17 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '/home',
+      name: 'home',
+      component: Home,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
       path: '/products',
-      name: 'products',
-      component: Products,
+      name: 'products-list',
+      component: ProductsList,
       meta: {
         requiresAuth: false
       }

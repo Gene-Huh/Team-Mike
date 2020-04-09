@@ -10,7 +10,7 @@
         <label for="password">Password:</label>
         <input id="password" type="text"></div>
     </form>
-    <router-link :to="{name: 'products'}"><button>Sign In</button></router-link>
+    <router-link :to="{name: 'home'}"><button>Sign In</button></router-link>
     
 </div>
 </template>

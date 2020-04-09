@@ -1,36 +1,13 @@
 <template>
-  <div class="products-list">
-    <h1>List of Products</h1>
+  <div class="products">
+    <div class = "lists">
     <button v-on:click="getUnapprovedList()">Unapproved</button>
     <button v-on:click="getApprovedList()">Approved</button>
+    </div>
+
+    
     <button v-on:click="ConfirmChanges()">Confirm Changes</button>
-    <table>
-      <thead>
-        <th>Select</th>
-        <th>Number</th>
-        <th>Default UOM</th>
-        <th>Cross Reference</th>
-        <th>Manufacturer ID</th>
-        <th>Inventory Status</th>
-        <th>Alternative Products</th>
-        <th>Description</th>
-      </thead>
-      <hr />
-      <tbody>
-        <tr v-for="item in filteredProductsList" v-bind:key="item.id">
-          <td>
-            <input type="checkbox" @change="MarkSelected(item.productNumber)" />
-          </td>
-          <td>{{item.productNumber}}</td>
-          <td>{{item.defaultUOM}}</td>
-          <td>{{item.crossReference}}</td>
-          <td>{{item.manufacturerId}}</td>
-          <td>{{item.inventoryStatus}}</td>
-          <td>{{item.alternativeProducts}}</td>
-          <td>{{item.productDescription}}</td>
-        </tr>
-      </tbody>
-    </table>
+    
   </div>
 </template>
 
@@ -39,11 +16,11 @@ export default {
   name: "products",
   data() {
     return {
-      API_URL: "http://localhost:64458/api",
+      
       products: [],
       filterCriteria: false,
       selectedItems: [],
-      lastSelected: ''
+      currentList: ''
     };
   },
   computed: {
@@ -68,33 +45,7 @@ export default {
     }
   },
   methods: {
-    getUnapprovedList() {
-      fetch(`${this.API_URL}/products/0`)
-        .then(response => {
-          return response.json();
-        })
-        .then(products => {
-          this.products = products;
-          this.selectedItems = [];
-          return products;
-        })
-        .catch(err => console.log(err));
-        this.lastSelected = "unapproved";
-    },
-
-    getApprovedList() {
-      fetch(`${this.API_URL}/products/1`)
-        .then(response => {
-          return response.json();
-        })
-        .then(products => {
-          this.products = products;
-          this.selectedItems = [];
-          return products;
-        })
-        .catch(err => console.log(err));
-        this.lastSelected= "approved";
-    },
+    
 
     MarkSelected(productNumber) {
       if (this.selectedItems.includes(productNumber)) {
@@ -109,7 +60,7 @@ export default {
     },
     ConfirmChanges() {
       this.selectedItems.forEach(item => {
-        fetch(`${this.API_URL}/item/${item}`, {
+        fetch(`${this.API_URL}/item/${item.productNumber}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json; charset=utf-8"
@@ -129,7 +80,7 @@ export default {
       else {
           this.getApprovedList();
       } */
-      window.location.assign('http://localhost:8080/products');
+      /* window.location.assign('http://localhost:8080/products'); */
     }
     
   }
@@ -156,12 +107,5 @@ h1,
 th {
   font-weight: 400;
 }
-button {
-  background-color: transparent;
-  border: 1px solid #bbbbbb;
-  color: #ffffff;
-  cursor: pointer;
-  margin: 0 5px 20px 0;
-  line-height: 18px;
-}
+
 </style>
