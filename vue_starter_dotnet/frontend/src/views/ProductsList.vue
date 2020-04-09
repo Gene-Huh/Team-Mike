@@ -3,7 +3,7 @@
     <button v-on:click="getUnapprovedList()">Unapproved</button>
     <button v-on:click="getApprovedList()">Approved</button>
     <SearchBar v-on:filter-list="handleSearch" />
-    <ProductsList v-bind:data="ProductsList" :search="search" :title="currentList" />
+    <ProductsList :data="data" :search="search" :title="currentList" />
   </div>
 </template>
 
@@ -32,21 +32,21 @@ export default {
     },
 
     getUnapprovedList() {
-      fetch(`${this.API_URL}/products/sellable/0`)
+      fetch(`${this.API_URL}/products/0`)
         .then(response => {
           return response.json();
         })
         .then(products => {
           this.data = products;
-          this.selectedItems = [];
-          return this.data;
+          this.selectedItems = [];/* 
+          return this.data; */
         })
         .catch(err => console.log(err));
       this.currentList = "Unapproved";
     },
 
     getApprovedList() {
-      fetch(`${this.API_URL}/products/sellable/1`)
+      fetch(`${this.API_URL}/products/1`)
         .then(response => {
           return response.json();
         })
