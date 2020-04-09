@@ -47,41 +47,39 @@ namespace ProductApproval.Controllers
             dao = dataAccessLayer;
         }
         
-        [HttpGet("{ProductNumber}", Name = "GetProductNumber")]
-        public Product GetProductNumber(string productNumber)
-        {
+        //[HttpGet("{ProductNumber}", Name = "GetProductNumber")]
+        //public Product GetProductNumber(string productNumber)
+        //{
 
-            if (productNumber != null)
-            {
-                return dao.GetItemByProductNumber(productNumber);
-            }
-            else
-            {
-                return new Product();
-            }
-        }
+        //    if (productNumber != null)
+        //    {
+        //        return dao.GetItemByProductNumber(productNumber);
+        //    }
+        //    else
+        //    {
+        //        return new Product();
+        //    }
+        //}
 
         [HttpPut("{productNumber}")]
-        public ActionResult SwitchingIsSellable(string productNumber, Product product)
+        public ActionResult SwitchingIsSellable(string productNumber)
         {
-            int isSellable = 0;
+            
             Product prodNum = dao.GetItemByProductNumber(productNumber);
 
             if (prodNum != null)
             {
                 if (prodNum.IsSellable == 0)
                 {
-                    isSellable = 1;
+                    prodNum.IsSellable = 1;
                 }
-                if (prodNum.IsSellable == 1)
+                else
                 {
-                    isSellable = 0;
+                    prodNum.IsSellable = 0;
                 }
             }
 
-            prodNum.IsSellable = product.IsSellable;
-
-            //dao.SaveChanges(prodNum);
+            dao.UpdateIsSellable(productNumber, prodNum.IsSellable);
 
             return NoContent();
         }

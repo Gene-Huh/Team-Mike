@@ -15,6 +15,7 @@ namespace ProductApproval.DAL
         private string getApprovedProductsSql = "SELECT * FROM ProductList WHERE isSellable = 1";
         private string getUnapprovedProductsSql = "SELECT * FROM ProductList WHERE isSellable = 0";
         private string getProductNumberSql = "SELECT * FROM ProductList WHERE ProductNumber = @ProductNumber";
+        private string updateIsSellableSql = "UPDATE ProductList SET isSellable = @isSellable WHERE ProductNumber = @ProductNumber";
 
         public ProductSqlDAO(string connectionString)
         {
@@ -78,6 +79,31 @@ namespace ProductApproval.DAL
                 }
                 return item;
             }
+        }
+
+        public int UpdateIsSellable (string productNumber, int isSellable)
+        {
+            Product product = new Product();
+            
+            int result = 0;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(updateIsSellableSql, conn);
+                    cmd.Parameters.AddWithValue("@ProductNumber", productNumber);
+                    cmd.Parameters.AddWithValue("@isSellable", isSellable);
+                    result = cmd.ExecuteNonQuery();
+                }                
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return result;
         }
 
 

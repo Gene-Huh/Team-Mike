@@ -45,5 +45,18 @@ namespace ProductApprovalTests.Tests
             expectedValue = item.ProductNumber;
             Assert.AreEqual(productNumber, expectedValue);
         }
+
+        [DataTestMethod]
+        [DataRow("0221785", 0)]
+        public void UpdateIsSellableTest(string productNumber, int expectedValue)
+        {
+             
+            ProductSqlDAO dao = new ProductSqlDAO(connectionString);
+            dao.UpdateIsSellable(productNumber, 0);
+            Product testProduct = dao.GetItemByProductNumber(productNumber);            
+            int result = testProduct.IsSellable;
+            Assert.AreEqual(expectedValue, result);
+
+        }
     }
 }
