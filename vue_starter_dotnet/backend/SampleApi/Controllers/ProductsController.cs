@@ -20,11 +20,9 @@ namespace ProductApproval.Controllers
             dao = dataAccessLayer;
         }
 
-
         [HttpGet("{isSellable}", Name = "GetProducts")]
         public IList<Product> GetProducts(int isSellable)
         {
-
             if (isSellable == 1)
             {
                 return dao.GetAllApprovedProducts();
@@ -33,7 +31,6 @@ namespace ProductApproval.Controllers
             {
                 return dao.GetAllUnapprovedProducts();
             }
-
         }
     }
 
@@ -46,25 +43,24 @@ namespace ProductApproval.Controllers
         {
             dao = dataAccessLayer;
         }
-        
-        //[HttpGet("{ProductNumber}", Name = "GetProductNumber")]
-        //public Product GetProductNumber(string productNumber)
-        //{
 
-        //    if (productNumber != null)
-        //    {
-        //        return dao.GetItemByProductNumber(productNumber);
-        //    }
-        //    else
-        //    {
-        //        return new Product();
-        //    }
-        //}
+        [HttpGet("{ProductNumber}", Name = "GetProductNumber")]
+        public Product GetProductNumber(string productNumber)
+        {
 
-        [HttpPut("{productNumber}")]
+            if (productNumber != null)
+            {
+                return dao.GetItemByProductNumber(productNumber);
+            }
+            else
+            {
+                return new Product();
+            }
+        }
+
+        [HttpPut("{productNumber}/Sellable")]
         public ActionResult SwitchingIsSellable(string productNumber)
         {
-            
             Product prodNum = dao.GetItemByProductNumber(productNumber);
 
             if (prodNum != null)
@@ -78,11 +74,19 @@ namespace ProductApproval.Controllers
                     prodNum.IsSellable = 0;
                 }
             }
-
             dao.UpdateIsSellable(productNumber, prodNum.IsSellable);
 
             return NoContent();
         }
-    }
 
+        [HttpPut("{productNumber}")]
+        public ActionResult EditProduct(string productNumber, [FromBody]Product product)
+        {
+            if (product.ProductNumber != null)
+            {
+                dao.EditProduct(product);
+            }
+            return Ok();
+        }
+    }
 }

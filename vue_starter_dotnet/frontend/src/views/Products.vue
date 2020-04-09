@@ -45,7 +45,33 @@ export default {
     }
   },
   methods: {
-    
+    getUnapprovedList() {
+      fetch(`${this.API_URL}/products/Sellable/0`)
+        .then(response => {
+          return response.json();
+        })
+        .then(products => {
+          this.products = products;
+          this.selectedItems = [];
+          return products;
+        })
+        .catch(err => console.log(err));
+        this.lastSelected = "unapproved";
+    },
+
+    getApprovedList() {
+      fetch(`${this.API_URL}/products/Sellable/1`)
+        .then(response => {
+          return response.json();
+        })
+        .then(products => {
+          this.products = products;
+          this.selectedItems = [];
+          return products;
+        })
+        .catch(err => console.log(err));
+        this.lastSelected= "approved";
+    },
 
     MarkSelected(productNumber) {
       if (this.selectedItems.includes(productNumber)) {
@@ -60,7 +86,7 @@ export default {
     },
     ConfirmChanges() {
       this.selectedItems.forEach(item => {
-        fetch(`${this.API_URL}/item/${item.productNumber}`, {
+        fetch(`${this.API_URL}/item/${item.productNumber}`, { //localhost:#####/api/item/[Object object]
           method: "PUT",
           headers: {
             "Content-Type": "application/json; charset=utf-8"
