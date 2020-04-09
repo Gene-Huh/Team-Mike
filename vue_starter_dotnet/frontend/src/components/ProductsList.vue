@@ -1,6 +1,8 @@
 <template>
 <div class = "products-display">
   
+  <button v-on:click="ConfirmChanges()">Confirm Changes</button>
+
   <table>
     <caption>{{title}}</caption>
     <thead>
@@ -17,7 +19,7 @@
     <tbody>
       <tr v-for="item in filteredList" v-bind:key="item.id" :class="{selected: item.selected}">
         <td>
-          <input type="checkbox" @click="changeStatus(item.productNumber)" autocomplete="off" />
+          <input type="checkbox" @click="MarkSelected(item.productNumber)" autocomplete="off" />
         </td>
         <td>{{item.productNumber}}</td>
         <td>{{item.defaultUOM}}</td>
@@ -41,7 +43,9 @@ export default {
       data: Array,
   },
   data() {
-      return {};
+      return {
+        selectedItems: []
+      };
   },
   methods: {
       changeStatus(id, event){
@@ -52,12 +56,37 @@ export default {
               const checkbox = event.target.querySelector('input[type="checkbox"]');
               checkbox.checked = !checkbox.checked;
           }
+      }, 
+      MarkSelected(productNumber) {
+      if (this.selectedItems.includes(productNumber)) {
+        let tempSelectedItems = this.selectedItems.filter(
+          item => item !== productNumber
+        );
+        this.selectedItems = tempSelectedItems;
+      } else {
+        this.selectedItems.push(productNumber);
       }
+      console.log(this.selectedItems);
+    },
+      ConfirmChanges() {
+      this.selectedItems.forEach(item => {
+        fetch(`${this.API_URL}/item/${item.productNumber}`, { //localhost:#####/api/item/[Object object]
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8"
+          },
+          body: JSON.stringify(item)
+        }).then(response => {
+          console.log(`SUCCESS ${response}`);
+        });
+      });
+     
+    }
   },
   computed: {
       filteredList() {
           const filter = new RegExp(this.search, 'i');
-          return this.data.forEach().filter(item => item.productNumber.match(filter));
+          return this.data.filter(item => item.manufacturerId.match(filter));
       }
   }
 };
