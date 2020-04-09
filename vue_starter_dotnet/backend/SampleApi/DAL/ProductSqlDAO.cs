@@ -105,8 +105,7 @@ namespace ProductApproval.DAL
 
             return result;
         }
-
-
+        
         private Product MapReadToProduct(SqlDataReader reader)
         {
             Product product = new Product();
@@ -126,12 +125,6 @@ namespace ProductApproval.DAL
 
             return product;
         }
-
-        //public void SwitchingIsSellable(Product product)
-        //{
-
-        //}
-
     }
 }
 

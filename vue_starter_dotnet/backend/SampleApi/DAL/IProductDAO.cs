@@ -8,17 +8,12 @@ namespace ProductApproval.DAL
 {
     public interface IProductDAO
     {
-        
         IList<Product> GetAllApprovedProducts();
 
         IList<Product> GetAllUnapprovedProducts();
 
         Product GetItemByProductNumber(string var);
 
-        //void SwitchingIsSellable(Product product);
-
         int UpdateIsSellable(string productNumber, int isSellable);
-
-
     }
 }
