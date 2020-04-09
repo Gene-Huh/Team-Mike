@@ -58,7 +58,7 @@ namespace ProductApproval.Controllers
             }
         }
 
-        [HttpPut("{productNumber}")]
+        [HttpPut("{productNumber}/Sellable")]
         public ActionResult SwitchingIsSellable(string productNumber)
         {
             Product prodNum = dao.GetItemByProductNumber(productNumber);
@@ -79,6 +79,14 @@ namespace ProductApproval.Controllers
             return NoContent();
         }
 
-
+        [HttpPut("{productNumber}")]
+        public ActionResult EditProduct(string productNumber, [FromBody]Product product)
+        {
+            if (product.ProductNumber != null)
+            {
+                dao.EditProduct(product);
+            }
+            return Ok();
+        }
     }
 }

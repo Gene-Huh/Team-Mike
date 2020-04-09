@@ -16,6 +16,12 @@ namespace ProductApproval.DAL
         private string getUnapprovedProductsSql = "SELECT * FROM ProductList WHERE isSellable = 0";
         private string getProductNumberSql = "SELECT * FROM ProductList WHERE ProductNumber = @ProductNumber";
         private string updateIsSellableSql = "UPDATE ProductList SET isSellable = @isSellable WHERE ProductNumber = @ProductNumber";
+        private string deleteItem = "DELETE FROM ProductList WHERE ProductNumber = @ProductNumber";
+        private string insertItemEdited = "INSERT INTO ProductList(ProductNumber, ProductDescription, DefaultUOM, isSellable, CrossReference, " + 
+        "ItemType, isDrugControlled, ManufacturerID, InventoryStatus, AlternativeProducts, isNonReturnable, isRefrigerated, isRegulated) VALUES " +
+        "(@ProductNumber, @ProductDescription, @DefaultUOM, @isSellable, @CrossReference, @ItemType, @isDrugControlled, @ManufacturerID, " +
+        "@InventoryStatus, @AlternativeProducts, @isNonReturnable, @isRefrigerated, @isRegulated);";
+
 
         public ProductSqlDAO(string connectionString)
         {
@@ -75,7 +81,7 @@ namespace ProductApproval.DAL
 
                 while(reader.Read())
                 {
-                    item=(MapReadToProduct(reader));
+                    item = (MapReadToProduct(reader));
                 }
                 return item;
             }
@@ -106,6 +112,42 @@ namespace ProductApproval.DAL
             return result;
         }
         
+        public Product EditProduct(Product product)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(deleteItem, conn);
+                cmd.Parameters.AddWithValue("@ProductNumber", product.ProductNumber);
+
+                cmd.ExecuteNonQuery();
+
+                cmd = new SqlCommand(insertItemEdited, conn);
+                cmd.Parameters.AddWithValue("@ProductNumber", product.ProductNumber);
+                cmd.Parameters.AddWithValue("@ProductDescription", product.ProductDescription);
+                cmd.Parameters.AddWithValue("@DefaultUOM", product.DefaultUOM);
+                cmd.Parameters.AddWithValue("@isSellable", product.IsSellable);
+                cmd.Parameters.AddWithValue("@CrossReference", product.CrossReference);
+                cmd.Parameters.AddWithValue("@ItemType", product.ItemType);
+                cmd.Parameters.AddWithValue("@isDrugControlled", product.IsDrugControlled);
+                cmd.Parameters.AddWithValue("@ManufacturerId", product.ManufacturerId);
+                cmd.Parameters.AddWithValue("@InventoryStatus", product.InventoryStatus);
+                cmd.Parameters.AddWithValue("@AlternativeProducts", product.AlternativeProducts);
+                cmd.Parameters.AddWithValue("@isNonReturnable", product.IsNonReturnable);
+                cmd.Parameters.AddWithValue("@isRefrigerated", product.IsRefrigerated);
+                cmd.Parameters.AddWithValue("@isRegulated", product.IsRegulated);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    product = (MapReadToProduct(reader));
+                }
+                return product;
+            }
+        }
+
         private Product MapReadToProduct(SqlDataReader reader)
         {
             Product product = new Product();

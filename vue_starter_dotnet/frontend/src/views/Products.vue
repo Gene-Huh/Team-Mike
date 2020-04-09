@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     getUnapprovedList() {
-      fetch(`${this.API_URL}/products/0`)
+      fetch(`${this.API_URL}/products/Sellable/0`)
         .then(response => {
           return response.json();
         })
@@ -83,7 +83,7 @@ export default {
     },
 
     getApprovedList() {
-      fetch(`${this.API_URL}/products/1`)
+      fetch(`${this.API_URL}/products/Sellable/1`)
         .then(response => {
           return response.json();
         })
@@ -109,7 +109,7 @@ export default {
     },
     ConfirmChanges() {
       this.selectedItems.forEach(item => {
-        fetch(`${this.API_URL}/item/${item}`, {
+        fetch(`${this.API_URL}/item/${item.productNumber}`, { //localhost:#####/api/item/[Object object]
           method: "PUT",
           headers: {
             "Content-Type": "application/json; charset=utf-8"

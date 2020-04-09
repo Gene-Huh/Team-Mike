@@ -15,5 +15,7 @@ namespace ProductApproval.DAL
         Product GetItemByProductNumber(string var);
 
         int UpdateIsSellable(string productNumber, int isSellable);
+
+        Product EditProduct(Product product);
     }
 }
