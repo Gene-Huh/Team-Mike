@@ -2,6 +2,7 @@
   <div class="products-display">
     <div class="confirm">
       <button v-on:click="confirmChanges()" id="confirm">Confirm Changes</button>
+      <button v-on:click="editItems()" id="confirm">Edit Selected Items</button>
     </div>
     <table>
       <caption>
@@ -99,6 +100,10 @@ export default {
         });
         this.selectedItems = [];
       });
+    },
+
+    editItems() {
+
     }
   },
   computed: {

@@ -1,11 +1,12 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import auth from './auth'
-import Login from './views/Login.vue'
-import ProductsList from './views/ProductsList.vue'
-import Home from './views/Home.vue'
+import Vue from "vue";
+import Router from "vue-router";
+import auth from "./auth";
+import Login from "./views/Login.vue";
+import ProductsList from "./views/ProductsList.vue";
+import Home from "./views/Home.vue";
+import Edit from "./views/Edit.vue";
 
-Vue.use(Router)
+Vue.use(Router);
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -17,20 +18,20 @@ Vue.use(Router)
  */
 
 const router = new Router({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/home',
-      name: 'home',
+      path: "/home",
+      name: "home",
       component: Home,
       meta: {
         requiresAuth: false
       }
     },
     {
-      path: '/products',
-      name: 'products-list',
+      path: "/products",
+      name: "products-list",
       component: ProductsList,
       meta: {
         requiresAuth: false
@@ -43,9 +44,17 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
+    },
+    {
+      path: "/edit",
+      name: "edit",
+      component: Edit,
+      meta: {
+        requiresAuth: false
+      }
     }
   ]
-})
+});
 
 router.beforeEach((to, from, next) => {
   // Determine if the route requires Authentication
