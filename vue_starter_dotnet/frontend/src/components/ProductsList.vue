@@ -57,7 +57,7 @@ export default {
   computed: {
       filteredList() {
           const filter = new RegExp(this.search, 'i');
-          return this.data.forEach().filter(item => item.productNumber.match(filter));
+          return this.data.filter(item => item.productNumber.match(filter));
       }
   }
 };
