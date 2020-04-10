@@ -1,5 +1,6 @@
 <template>
   <div>
+    <label for="search">Search: </label>
     <input
       type="text"
       id="search"
@@ -7,7 +8,6 @@
       v-on:keyup="filterList"
       placeholder="Enter search here"
     />
-    <input type="text" />
   </div>
 </template>
 
@@ -21,3 +21,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+label{
+  margin-right: 20px;
+}
+</style>

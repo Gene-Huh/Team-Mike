@@ -1,9 +1,10 @@
 <template>
   <div class="products-list">
+    <span>Select List Type:</span>
     <button v-on:click="getUnapprovedList()">Unapproved</button>
     <button v-on:click="getApprovedList()">Approved</button>
     <SearchBar v-on:filter-list="handleSearch" />
-    <ProductsList :data="data" :search="search" :title="currentList" />
+    <ProductsList :data="data" :search="search" :title="currentList" :API_URL="API_URL"/>
   </div>
 </template>
 
@@ -38,11 +39,9 @@ export default {
         })
         .then(products => {
           this.data = products;
-          this.selectedItems = [];/* 
-          return this.data; */
         })
         .catch(err => console.log(err));
-      this.currentList = "Unapproved";
+      this.currentList = "Unapproved Products List";
     },
 
     getApprovedList() {
@@ -52,12 +51,23 @@ export default {
         })
         .then(products => {
           this.data = products;
-          this.selectedItems = [];
-          return this.data;
         })
         .catch(err => console.log(err));
-      this.currentList = "Approved";
+      this.currentList = "Approved Products List";
     }
   }
 };
 </script>
+
+<style>
+button {
+  margin: 1% 1% 1% 1%;
+  border-radius: 25px;
+  padding: 5px 10px;
+  font-weight: bold;
+}
+button:hover {
+  background-color: #f0ab00;
+  color: black;
+}
+</style>
