@@ -52,7 +52,8 @@ button {
   line-height: 18px;
 }
 img {
-  width: 40%;
+  width: 15%;
   height: auto;
+  margin-left: 20px;
 }
 </style>

@@ -126,12 +126,6 @@ export default {
 </script>
 
 <style scoped>
-hr {
-  border: 1px solid #f0ab00;
-}
-h1,
-th {
-  font-weight: 400;
-}
+
 
 </style>

@@ -1,99 +1,136 @@
 <template>
-<div class = "products-display">
-  
-  <button v-on:click="ConfirmChanges()">Confirm Changes</button>
-
-  <table>
-    <caption>{{title}}</caption>
-    <thead>
-      <th>Select</th>
-      <th>Number</th>
-      <th>Default UOM</th>
-      <th>Cross Reference</th>
-      <th>Manufacturer ID</th>
-      <th>Inventory Status</th>
-      <th>Alternative Products</th>
-      <th>Description</th>
-    </thead>
-    <hr />
-    <tbody>
-      <tr v-for="item in filteredList" v-bind:key="item.id" :class="{selected: item.selected}">
-        <td>
-          <input type="checkbox" @click="MarkSelected(item.productNumber)" autocomplete="off" />
-        </td>
-        <td>{{item.productNumber}}</td>
-        <td>{{item.defaultUOM}}</td>
-        <td>{{item.crossReference}}</td>
-        <td>{{item.manufacturerId}}</td>
-        <td>{{item.inventoryStatus}}</td>
-        <td>{{item.alternativeProducts}}</td>
-        <td>{{item.productDescription}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  <div class="products-display">
+    <div class="confirm">
+      <button v-on:click="confirmChanges()" id="confirm">Confirm Changes</button>
+    </div>
+    <table>
+      <caption>
+        <h2>{{title}}</h2>
+      </caption>
+      <thead>
+        <th>Select</th>
+        <th>Number</th>
+        <th>Default UOM</th>
+        <th>Cross Reference</th>
+        <th>Manufacturer ID</th>
+        <th>Inventory Status</th>
+        <th>Alternative Products</th>
+        <th>Description</th>
+      </thead>
+      <hr />
+      <tbody>
+        <tr
+          v-for="item in filteredList"
+          v-bind:key="item.productNumber"
+          :class="item.productNumber"
+        >
+          <td>
+            <input
+              type="checkbox"
+              @click="markSelected($event)"
+              v-model="selectedItems"
+              :value="item.productNumber"
+              :id="item.productNumber"
+            />
+          </td>
+          <td>{{item.productNumber}}</td>
+          <td>{{item.defaultUOM}}</td>
+          <td>{{item.crossReference}}</td>
+          <td>{{item.manufacturerId}}</td>
+          <td>{{item.inventoryStatus}}</td>
+          <td>{{item.alternativeProducts}}</td>
+          <td>{{item.productDescription}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
 export default {
   name: "products-list",
   props: {
-      title: String,
-      search: String,
-      data: Array,
+    title: String,
+    search: String,
+    data: Array,
+    API_URL: String
   },
   data() {
-      return {
-        selectedItems: []
-      };
+    return {
+      selectedItems: []
+    };
   },
   methods: {
-      changeStatus(id, event){
-          const arrIndex = this.data.findIndex(item => item.productNumber == id);
-          this.data[arrIndex].selected = !this.data[arrIndex].selected;
-
-          if (event.target.type != "checkbox") {
-              const checkbox = event.target.querySelector('input[type="checkbox"]');
-              checkbox.checked = !checkbox.checked;
-          }
-      }, 
-      MarkSelected(productNumber) {
-      if (this.selectedItems.includes(productNumber)) {
-        let tempSelectedItems = this.selectedItems.filter(
-          item => item !== productNumber
-        );
-        this.selectedItems = tempSelectedItems;
-      } else {
-        this.selectedItems.push(productNumber);
-      }
-      console.log(this.selectedItems);
+    resetStatus(productNumber) {
+      const checkBox = document.getElementById(productNumber);
+      checkBox.checked = false;
+      checkBox.parentNode.classList.remove("selected");
+      const arrIndex = this.data.findIndex(item => item.productNumber == productNumber);
+      this.data.splice(arrIndex, 1);
     },
-      ConfirmChanges() {
+    markSelected(event) {
+      event.stopPropagation();
+      const { target } = event;
+      const tableRow = target.closest("tr");
+      if (!target.checked) {
+        tableRow.classList.remove("selected");
+      } else {
+        tableRow.classList.add("selected");
+      }
+    },
+
+    confirmChanges() {
       this.selectedItems.forEach(item => {
-        fetch(`${this.API_URL}/item/${item.productNumber}`, { //localhost:#####/api/item/[Object object]
+        this.resetStatus(item);
+        fetch(`${this.API_URL}/item/${item}/Sellable`, {
+          //localhost:#####/api/item/[Object object]
           method: "PUT",
           headers: {
             "Content-Type": "application/json; charset=utf-8"
           },
           body: JSON.stringify(item)
         }).then(response => {
-          console.log(`SUCCESS ${response}`);
+          let rText = response.text().toString();
+          if (rText == 0) {
+            console.log(`FAIL: ${rText} failed to change isSellable value`);
+          } else {
+            console.log(`SUCCESS: ${rText} changed isSellable value`);
+          }
         });
+        this.selectedItems = [];
       });
-     
     }
   },
   computed: {
-      filteredList() {
-          const filter = new RegExp(this.search, 'i');
-          return this.data.filter(item => item.manufacturerId.match(filter));
-      }
+    filteredList() {
+      const filter = new RegExp(this.search, "i");
+      return this.data.filter(item => item.productNumber.match(filter));
+    }
   }
 };
 </script>
 
 <style>
-.tr.selected {
-    color: goldenrod;
+.selected {
+  background-color: #f0ab00;
+  color: black;
+  padding: 0;
+  margin: 0;
 }
+caption {
+  background-color: white;
+  color: black;
+}
+table {
+  border-style: hidden;
+  margin: 5px;
+  border-collapse: collapse;
+}
+/* hr {
+  border: 1px solid #f0ab00;
+}
+h1,
+th {
+  font-weight: 400;
+} */
 </style>
