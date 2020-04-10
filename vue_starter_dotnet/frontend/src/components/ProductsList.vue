@@ -104,7 +104,18 @@ export default {
   computed: {
     filteredList() {
       const filter = new RegExp(this.search, "i");
-      return this.data.filter(item => item.productNumber.match(filter));
+      return this.data.filter(
+        product => (
+          product.productNumber.match(filter) ||
+         product.productDescription.match(filter) ||
+          product.manufacturerId.match(filter) ||
+          product.crossReference.match(filter) ||
+          product.alternativeProducts.match(filter) ||
+          product.defaultUOM.match(filter) ||
+          product.inventoryStatus.match(filter)
+          ) 
+          
+        );
     }
   }
 };
