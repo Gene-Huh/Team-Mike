@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProductApproval.DAL;
 using ProductApproval.Models;
+using ProductApproval.Password_and_Authentication_Helpers;
+using static ProductApproval.Password_and_Authentication_Helpers.HashProvider;
 
 namespace ProductApproval.Controllers
 {
@@ -87,6 +89,14 @@ namespace ProductApproval.Controllers
                 dao.EditProduct(product);
             }
             return Ok();
+        }
+
+        [HttpPost("password/{password}")]
+        public ActionResult Password(string password)
+        {
+            HashProvider hashProvider = new HashProvider();
+            HashedPassword hashedPassword = hashProvider.HashPassword(password);
+            return Ok(hashedPassword);
         }
     }
 }
