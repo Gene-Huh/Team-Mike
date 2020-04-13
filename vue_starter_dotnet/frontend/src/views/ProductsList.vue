@@ -5,6 +5,7 @@
     <button v-on:click="getApprovedList()">Approved</button>
     <SearchBar v-on:filter-list="handleSearch" />
     <ProductsList :data="data" :search="search" :title="currentList" :API_URL="API_URL"/>
+    
   </div>
 </template>
 
@@ -23,10 +24,14 @@ export default {
       search: "",
       data: [],
       currentList: "",
-      API_URL: "http://localhost:64458/api"
+      API_URL: "http://localhost:64458/api",
+      selectedItems: []
     };
   },
   methods: {
+    edit(){
+      this.$router.push({name: 'edit', params:{selectedItems: this.selectedItems}})
+    },
     handleSearch(query) {
       console.log("filter-list", query);
       this.search = query;

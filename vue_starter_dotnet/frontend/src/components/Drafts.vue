@@ -1,10 +1,14 @@
 <template>
   <div>
-    <h3>{{title}}</h3>
+    <span>Edit Items:</span>
+    <button v-on:click="saveDrafts()">Save</button>
+    <button v-on:click="confirmDrafts()">Confirm</button>
+
     <div class="body-container">
       <div class="draft-box" v-for="(item, index) in drafts" :key="index">
-        <span>{{item.productNumber}}</span>
-        <hr />
+        <span>
+          <h4>Product Number: {{item.productNumber}}</h4>
+        </span>
         <label for="description">Description</label>
         <input type="text" name="description" v-model="item.productDescription" />
         <label for="sellable">Cross Reference</label>
@@ -50,71 +54,48 @@ export default {
   name: "drafts",
   data() {
     return {
-      storedDrafts: [
-        { productNumber: "123", productDescription: "generic item" }
-      ],
+      storedDrafts: [],
       drafts: [],
       title: "Edit Drafts"
     };
   },
   props: {
-    API_URL: String,
-    selectedItems: Array
+    API_URL: String
   },
-  created() {},
+  created() {
+    this.selectedItems = this.$route.params.selectedItems;
+  },
   methods: {
-    enterToChangeFields() {
-      const allInputs = document.querySelectorAll("input");
-      Array.from(allInputs).forEach((element, index) => {
-        const isLastElement = index === allInputs.length - 1;
-        element.onkeypress = event => {
-          if (event.key === "Enter") {
-            if (isLastElement) {
-              // last element should go back to the first input that isn't the title
-              allInputs[1].focus(); // element `0` is the #title input
-            } else {
-              // otherwise focus the next input
-              allInputs[index + 1].focus();
-            }
-          }
-        };
-      });
+    saveDrafts() {
+      const draftString = JSON.stringify(this.drafts);
+      window.localStorage.setItem("productNumber", draftString);
     },
-    saveDraft() {
-      document.querySelector("#save-all").onclick = () => {
-        this.drafts.forEach(draft => {
-          let savedMatrixAValues = [];
-          document
-            .querySelectorAll(`#${draft} input`)
-            .forEach(item => savedMatrixAValues.push(item.value));
-          const matrixAString = JSON.stringify(savedMatrixAValues);
-          window.localStorage.setItem(draft, matrixAString);
-        });
-      };
-    }
+
+    /* loadDrafts() {
+      try {
+        const data = JSON.parse(window.localStorage.getItem("productNumber"));
+        data.forEach(item => this.drafts.push(item));
+      } catch (error) {
+        console.log(error);
+      }
+    } */
   },
   mounted() {
-    if (this.storedDrafts != null) {
-      /* this.storedDrafts.forEach(draft => {
-        try {
-          JSON.parse(window.localStorage.getItem(draft)).forEach(item =>
-            this.drafts.push(item)
-          );
-        } catch (error) {
-          console.log(error);
-        }
-      }); */
-      this.drafts = this.storedDrafts;
-    }
+    JSON.parse(window.localStorage.getItem("productNumber")).forEach(item =>
+      this.drafts.push(item)
+    );
     if (this.selectedItems != null) {
-      this.selectedItems.forEach(id => {
-        fetch(`${this.API_URL}/api/item/${id}`)
+       let filtered = this.drafts.filter(product => !this.selectedItems.includes(product.productNumber));
+        filtered.forEach(id => {{
+          fetch(`${this.API_URL}/item/${id}`)
           .then(response => {
             return response.json();
           })
           .then(item => {
             this.drafts.push(item);
           });
+        }
+        
       });
     }
   }
@@ -128,11 +109,16 @@ export default {
 .draft-box {
   display: block;
   width: 25%;
+  border-bottom: 2px solid #f0ab00;
 }
 input {
   width: 100%;
 }
 input.checkbox {
   display: inline;
+  width: auto;
+}
+span {
+  margin-bottom: 5px;
 }
 </style>

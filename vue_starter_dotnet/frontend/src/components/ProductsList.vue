@@ -2,7 +2,8 @@
   <div class="products-display">
     <div class="confirm">
       <button v-on:click="confirmChanges()" id="confirm">Confirm Changes</button>
-      <button v-on:click="editItems()" id="confirm">Edit Selected Items</button>
+      <router-link :to="{name: 'edit', params: {selectedItems: this.selectedItems}}" ><button id="edit">Edit Selected Items</button></router-link>
+      
     </div>
     <table>
       <caption>
