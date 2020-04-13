@@ -1,138 +1,138 @@
 <template>
+  <div>
+    <h3>{{title}}</h3>
+    <div class="body-container">
+      <div class="draft-box" v-for="(item, index) in drafts" :key="index">
+        <span>{{item.productNumber}}</span>
+        <hr />
+        <label for="description">Description</label>
+        <input type="text" name="description" v-model="item.productDescription" />
+        <label for="sellable">Cross Reference</label>
+        <input type="text" name="crossReference" v-model="item.crossReference" />
+        <label for="manufacturerId">Manufacturer</label>
+        <input type="text" name="manufacturerId" v-model="item.manufacturerId" />
+        <label for="inventoryStatus">Inventory Status</label>
+        <input type="text" name="inventoryStatus" v-model="item.inventoryStatus" />
+        <label for="alternativeProducts">Alternative Products</label>
+        <input type="text" name="alternativeProducts" v-model="item.alternativeProducts" />
+        <div>
+          <input type="checkbox" class="checkbox" name="sellable" v-model="item.isSellable" />
+          <label for="sellable">Approved</label>
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            class="checkbox"
+            name="drugControlled"
+            v-model="item.isDrugControlled"
+          />
+          <label for="drugControlled">Drug Controlled</label>
+        </div>
+        <div>
+          <input type="checkbox" class="checkbox" name="returnable" v-model="item.isNonReturnable" />
+          <label for="returnable">Returnable</label>
+        </div>
+        <div>
+          <input type="checkbox" class="checkbox" name="refrigerated" v-model="item.isRefrigerated" />
+          <label for="refrigerated">Refrigerated</label>
+        </div>
+        <div>
+          <input type="checkbox" class="checkbox" name="regulated" v-model="item.isRegulated" />
+          <label for="regulated">Regulated</label>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-
-/**
- * Array containing keys for each box:
- *        _______
- *       | A | B |
- *       |___|___|
- *       | C | D |
- *       |___|___|
- */
-const keys = ["A", "B", "C", "D"];
-
-// ////////////////////////////////////////////////////////////
-// ///////////////HELPER FUNCTIONS ////////////////////////////
-// ////////////////////////////////////////////////////////////
-
-function getUserTitleElement() {
-  return document.querySelector("#title").value;
-}
-
-function updateSavedAtTime() {
-  document.querySelector(
-    "#saved-at-time"
-  ).innerText = new Date().toLocaleString();
-}
-
-// Converts text from each box to a string separated by a "|" symbol"
-// and adds a `\n` character so each boxes contents will print on a
-// new line when the file is ultimately written
-function getTextToSaveToFile() {
-  return keys
-    .map(key => {
-      let savedMatrixAValues = [];
-      document
-        .querySelectorAll(`#${key} input`)
-        .forEach(item => savedMatrixAValues.push(item.value));
-      const stringOfInputs = savedMatrixAValues
-        .filter(item => item.length > 0)
-        .join("|");
-      return stringOfInputs;
-    })
-    .join("\n");
-}
-
-// ////////////////////////////////////////////////////////////
-// ///////////////ON PAGE LOAD ////////////////////////////////
-// ////////////////////////////////////////////////////////////
-
-// LOAD TITLE
-//gets last saved title and populates title box
-const title = window.localStorage.getItem("title");
-document.querySelector("#title").value = title;
-
-// LOAD ALL INPUTS
-//gets item from storage, parses it in order to convert string object to array.
-//populates inputs with previous saved info
-keys.forEach(key => {
-  try {
-    let currentInputsValues = [];
-    JSON.parse(window.localStorage.getItem(key)).forEach(item =>
-      currentInputsValues.push(item)
-    );
-
-    const currentBoxHTMLInputs = document.querySelectorAll(`#${key} input`);
-
-    currentBoxHTMLInputs.forEach(
-      (item, i) => (item.value = currentInputsValues[i])
-    );
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-// update the saved at time when the page loads
-updateSavedAtTime();
-
-// ////////////////////////////////////////////////////////////
-// ///////////////EVENT HANDLERS///////////////////////////////
-// ////////////////////////////////////////////////////////////
-
-//when title is being typed, it is stored on key release
-document.querySelector("#title").onkeyup = event => {
-  window.localStorage.setItem("title", event.target.value);
-};
-
-//When save button is clicked each input in each box is saved
-document.querySelector("#save-all").onclick = () => {
-  keys.forEach(key => {
-    let savedMatrixAValues = [];
-    document
-      .querySelectorAll(`#${key} input`)
-      .forEach(item => savedMatrixAValues.push(item.value));
-    const matrixAString = JSON.stringify(savedMatrixAValues); //need to stringyfy in order to save in local storage
-    window.localStorage.setItem(key, matrixAString);
-  });
-  updateSavedAtTime();
-};
-
-// When download button is clicked, data is downloaded as a .txt file.
-// File is named after current title in the `#title` box.
-// File content is obtained using helper function `getTextToSaveToFile()`
-document.querySelector("#download-data").onclick = () => {
-  var element = document.createElement("a");
-  element.setAttribute(
-    "href",
-    "data:text/plain;charset=utf-8," + encodeURIComponent(getTextToSaveToFile())
-  );
-  element.setAttribute("download", getUserTitleElement());
-
-  element.style.display = "none";
-  document.body.appendChild(element);
-
-  element.click();
-
-  document.body.removeChild(element);
-};
-
-// On "Enter" key, focus to the next input
-const allInputs = document.querySelectorAll("input");
-Array.from(allInputs).forEach((element, index) => {
-  const isLastElement = index === allInputs.length - 1;
-  element.onkeypress = event => {
-    if (event.key === "Enter") {
-      if (isLastElement) {
-        // last element should go back to the first input that isn't the title
-        allInputs[1].focus(); // element `0` is the #title input
-      } else {
-        // otherwise focus the next input
-        allInputs[index + 1].focus();
-      }
+export default {
+  name: "drafts",
+  data() {
+    return {
+      storedDrafts: [
+        { productNumber: "123", productDescription: "generic item" }
+      ],
+      drafts: [],
+      title: "Edit Drafts"
+    };
+  },
+  props: {
+    API_URL: String,
+    selectedItems: Array
+  },
+  created() {},
+  methods: {
+    enterToChangeFields() {
+      const allInputs = document.querySelectorAll("input");
+      Array.from(allInputs).forEach((element, index) => {
+        const isLastElement = index === allInputs.length - 1;
+        element.onkeypress = event => {
+          if (event.key === "Enter") {
+            if (isLastElement) {
+              // last element should go back to the first input that isn't the title
+              allInputs[1].focus(); // element `0` is the #title input
+            } else {
+              // otherwise focus the next input
+              allInputs[index + 1].focus();
+            }
+          }
+        };
+      });
+    },
+    saveDraft() {
+      document.querySelector("#save-all").onclick = () => {
+        this.drafts.forEach(draft => {
+          let savedMatrixAValues = [];
+          document
+            .querySelectorAll(`#${draft} input`)
+            .forEach(item => savedMatrixAValues.push(item.value));
+          const matrixAString = JSON.stringify(savedMatrixAValues);
+          window.localStorage.setItem(draft, matrixAString);
+        });
+      };
     }
-  };
-});
+  },
+  mounted() {
+    if (this.storedDrafts != null) {
+      /* this.storedDrafts.forEach(draft => {
+        try {
+          JSON.parse(window.localStorage.getItem(draft)).forEach(item =>
+            this.drafts.push(item)
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      }); */
+      this.drafts = this.storedDrafts;
+    }
+    if (this.selectedItems != null) {
+      this.selectedItems.forEach(id => {
+        fetch(`${this.API_URL}/api/item/${id}`)
+          .then(response => {
+            return response.json();
+          })
+          .then(item => {
+            this.drafts.push(item);
+          });
+      });
+    }
+  }
+};
 </script>
 
+<style scoped>
+.body-container {
+  display: flexbox;
+}
+.draft-box {
+  display: block;
+  width: 25%;
+}
+input {
+  width: 100%;
+}
+input.checkbox {
+  display: inline;
+}
+</style>

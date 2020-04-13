@@ -5,17 +5,21 @@
     <button v-on:click="getApprovedList()">Save draft</button>
     <button v-on:click="getApprovedList()">Confirm</button>
     
-    <Drafts :data="data" :title="edit" :API_URL="API_URL"/>
+    <Drafts :selectedItems="selectedItems" :API_URL="API_URL" />
   </div>
 </template>
 
 <script>
-import Drafts from "@/components/Drafts";
+import Drafts from "@/components/Drafts.vue";
 
 
 export default {
   name: "edit",
   components: {
-    Drafts,
-   
+    Drafts
+  },
+  data() {
+    
   }
+}
+</script>

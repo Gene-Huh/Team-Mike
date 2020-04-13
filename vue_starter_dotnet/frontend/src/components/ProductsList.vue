@@ -11,12 +11,13 @@
       <thead>
         <th>Select</th>
         <th>Number</th>
+        <th>Description</th>
         <th>Default UOM</th>
         <th>Cross Reference</th>
         <th>Manufacturer ID</th>
         <th>Inventory Status</th>
         <th>Alternative Products</th>
-        <th>Description</th>
+
       </thead>
       <hr />
       <tbody>
@@ -35,12 +36,12 @@
             />
           </td>
           <td>{{item.productNumber}}</td>
+          <td>{{item.productDescription}}</td>  
           <td>{{item.defaultUOM}}</td>
           <td>{{item.crossReference}}</td>
           <td>{{item.manufacturerId}}</td>
           <td>{{item.inventoryStatus}}</td>
           <td>{{item.alternativeProducts}}</td>
-          <td>{{item.productDescription}}</td>
         </tr>
       </tbody>
     </table>
@@ -103,7 +104,7 @@ export default {
     },
 
     editItems() {
-
+      this.$emit('edit', this.selectedItems)
     }
   },
   computed: {
