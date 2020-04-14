@@ -96,7 +96,8 @@ export default {
     return {
       title: "Edit Drafts",
       storedDrafts: [],
-      drafts: []
+      drafts: [],
+      loadedProductNumbers: []
     };
   },
   props: {
@@ -113,8 +114,11 @@ export default {
   },
   mounted() {
     try {
-      JSON.parse(window.localStorage.getItem("productNumber")).forEach(item =>
-        this.drafts.push(item)
+      JSON.parse(window.localStorage.getItem("productNumber")).forEach(item => {
+        this.drafts.push(item);
+        this.loadedProductNumbers.push(item.productNumber);
+      }
+        
       );
       //window.localStorage.removeItem("productNumber");
     } catch {
@@ -123,7 +127,8 @@ export default {
 
     // This is not loading selectedItems if drafts is empty because of filter working wrong.
     if (this.selectedItems != null) {
-      this.selectedItems.forEach(id => {
+      let checkedForDupes = this.selectedItems.filter(item => !this.loadedProductNumbers.includes(item))
+      checkedForDupes.forEach(id => {
         {
           fetch(`${this.API_URL}/item/${id}`)
             .then(response => {
@@ -141,7 +146,7 @@ export default {
 
 <style scoped>
 .body-container {
-  display: flexbox;
+  display: flex;
 }
 .draft-box {
   display: block;
