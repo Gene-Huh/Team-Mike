@@ -141,14 +141,28 @@ export default {
 
 <style scoped>
 .body-container {
-  display: flexbox;
+  display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  
+  
 }
 .draft-box {
+  display: flex;
   display: block;
-  width: 25%;
+  padding: 1rem;
+  width: 20vw;
   border: 2px solid #f0ab00;
+
 }
+
+@media only screen and (max-width: 400px) {
+  .draft-box{
+    min-width: 20vw;
+  }
+  }
+
+
 input {
   width: 100%;
 }
