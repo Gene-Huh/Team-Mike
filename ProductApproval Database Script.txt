@@ -42,7 +42,7 @@ CREATE TABLE ProductList (
 
 CREATE TABLE Users (
 
-    userIDs int NOT NULL IDENTITY PRIMARY KEY,
+    userID int NOT NULL IDENTITY PRIMARY KEY,
 
     role varchar(64) NOT NULL,
 
