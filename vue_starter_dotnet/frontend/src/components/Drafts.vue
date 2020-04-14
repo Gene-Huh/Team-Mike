@@ -1,6 +1,7 @@
 <template>
   <div>
     <span>Edit Items:</span>
+    <router-link to="home" tag="button">Home</router-link>
     <button v-on:click="saveDrafts()">Save</button>
     <button v-on:click="confirmDrafts()">Commit Changes</button>
 
