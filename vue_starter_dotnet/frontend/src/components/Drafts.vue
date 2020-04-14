@@ -163,15 +163,12 @@ export default {
 .body-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
 }
 .draft-box {
   display: block;
-  flex-shrink: 1;
-  flex-basis: auto;
   padding: 1rem;
   margin: 1rem;
-  width: 350px;
+  width: 25%;
   border: 2px solid #f0ab00;
   text-align: center;
 }
