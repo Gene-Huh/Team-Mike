@@ -1,11 +1,13 @@
 <template>
   <div>
     <span>Edit Items:</span>
+    <router-link to="home" tag="button">Home</router-link>
     <button v-on:click="saveDrafts()">Save</button>
     <button v-on:click="confirmDrafts()">Commit Changes</button>
 
     <div class="body-container">
       <div class="draft-box" v-for="(item, index) in drafts" :key="index">
+        <button style="background-color: red" @dblclick="discardItem(index)">x</button>
         <span>
           <h4>Product Number: {{ item.productNumber }}</h4>
         </span>
@@ -96,7 +98,8 @@ export default {
     return {
       title: "Edit Drafts",
       storedDrafts: [],
-      drafts: []
+      drafts: [],
+      loadedProductNumbers: []
     };
   },
   props: {
@@ -109,21 +112,42 @@ export default {
     saveDrafts() {
       const draftString = JSON.stringify(this.drafts);
       window.localStorage.setItem("productNumber", draftString);
+    },
+    confirmDrafts() {
+      if (this.drafts != null) {
+        this.drafts.forEach(product => {
+          fetch(`${this.API_URL}/item/${product.productNumber}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            body: JSON.stringify(product)
+          }).then(response => response.JSON());
+        });
+        this.drafts = [];
+        window.localStorage.removeItem("productNumber");
+      }
+    },
+    discardItem(index) {
+      this.drafts.splice(index, 1);
     }
   },
   mounted() {
     try {
-      JSON.parse(window.localStorage.getItem("productNumber")).forEach(item =>
-        this.drafts.push(item)
-      );
-      //window.localStorage.removeItem("productNumber");
+      JSON.parse(window.localStorage.getItem("productNumber")).forEach(item => {
+        this.drafts.push(item);
+        this.loadedProductNumbers.push(item.productNumber);
+      });
     } catch {
       console.log("No existing saved entries for edit");
     }
 
     // This is not loading selectedItems if drafts is empty because of filter working wrong.
     if (this.selectedItems != null) {
-      this.selectedItems.forEach(id => {
+      let checkedForDupes = this.selectedItems.filter(
+        item => !this.loadedProductNumbers.includes(item)
+      );
+      checkedForDupes.forEach(id => {
         {
           fetch(`${this.API_URL}/item/${id}`)
             .then(response => {
@@ -142,18 +166,30 @@ export default {
 <style scoped>
 .body-container {
   display: flex;
+<<<<<<< HEAD
   flex-direction: row;
   flex-wrap: wrap;
   
   
+=======
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+>>>>>>> 13ade536690de3006ecad57254a3389123d59792
 }
 .draft-box {
   display: flex;
   display: block;
   padding: 1rem;
+<<<<<<< HEAD
   width: 20vw;
   border: 2px solid #f0ab00;
 
+=======
+  margin: 1rem;
+  width: 350px;
+  border: 2px solid #f0ab00;
+  text-align: center;
+>>>>>>> 13ade536690de3006ecad57254a3389123d59792
 }
 
 @media only screen and (max-width: 400px) {
