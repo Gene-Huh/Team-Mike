@@ -7,6 +7,7 @@
 
     <div class="body-container">
       <div class="draft-box" v-for="(item, index) in drafts" :key="index">
+        <button style="background-color: red" @dblclick="discardItem(index)">x</button>
         <span>
           <h4>Product Number: {{ item.productNumber }}</h4>
         </span>
@@ -126,6 +127,9 @@ export default {
         this.drafts = [];
         window.localStorage.removeItem("productNumber");
       }
+    },
+    discardItem(index) {
+      this.drafts.splice(index, 1);
     }
   },
   mounted() {
