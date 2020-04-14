@@ -8,6 +8,7 @@ using ProductApproval.DAL;
 using ProductApproval.Models;
 using ProductApproval.Password_and_Authentication_Helpers;
 using static ProductApproval.Password_and_Authentication_Helpers.HashProvider;
+using Microsoft.Extensions.Configuration;
 
 namespace ProductApproval.Controllers
 {

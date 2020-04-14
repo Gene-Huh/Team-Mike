@@ -5,13 +5,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using ProductApproval.DAL;
 using ProductApproval.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace ProductApproval.DAL
 {
     public class ProductSqlDAO : IProductDAO
     {
         private readonly string connectionString;
-       
+        public ProductSqlDAO(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
+
         private string getApprovedProductsSql = "SELECT * FROM ProductList WHERE isSellable = 1";
         private string getUnapprovedProductsSql = "SELECT * FROM ProductList WHERE isSellable = 0";
         private string getProductNumberSql = "SELECT * FROM ProductList WHERE ProductNumber = @ProductNumber";
@@ -21,12 +26,6 @@ namespace ProductApproval.DAL
         "ItemType, isDrugControlled, ManufacturerID, InventoryStatus, AlternativeProducts, isNonReturnable, isRefrigerated, isRegulated) VALUES " +
         "(@ProductNumber, @ProductDescription, @DefaultUOM, @isSellable, @CrossReference, @ItemType, @isDrugControlled, @ManufacturerID, " +
         "@InventoryStatus, @AlternativeProducts, @isNonReturnable, @isRefrigerated, @isRegulated);";
-
-
-        public ProductSqlDAO(string connectionString)
-        {
-            this.connectionString = connectionString;
-        }
 
         List<Product> ProductList { get; set; }
 

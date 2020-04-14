@@ -27,7 +27,6 @@ namespace ProductApproval
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -76,8 +75,8 @@ namespace ProductApproval
             //services.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(Configuration["JwtSecret"]));
             //services.AddSingleton<IPasswordHasher>(ph => new PasswordHasher());
 
-            services.AddTransient<IProductDAO>(m => new ProductSqlDAO(Configuration.GetConnectionString("Default")));
-
+            services.AddTransient<IProductDAO>(m => new ProductSqlDAO(Configuration.GetConnectionString("Products")));
+            services.AddTransient<IUsersDAO>(m => new UsersSqlDAO(Configuration.GetConnectionString("Users")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
