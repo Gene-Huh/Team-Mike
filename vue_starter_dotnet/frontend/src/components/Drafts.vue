@@ -7,20 +7,45 @@
     <div class="body-container">
       <div class="draft-box" v-for="(item, index) in drafts" :key="index">
         <span>
-          <h4>Product Number: {{item.productNumber}}</h4>
+          <h4>Product Number: {{ item.productNumber }}</h4>
         </span>
         <label for="description">Description</label>
-        <input type="text" name="description" v-model="item.productDescription" />
+        <input
+          type="text"
+          name="description"
+          v-model="item.productDescription"
+        />
         <label for="sellable">Cross Reference</label>
-        <input type="text" name="crossReference" v-model="item.crossReference" />
+        <input
+          type="text"
+          name="crossReference"
+          v-model="item.crossReference"
+        />
         <label for="manufacturerId">Manufacturer</label>
-        <input type="text" name="manufacturerId" v-model="item.manufacturerId" />
+        <input
+          type="text"
+          name="manufacturerId"
+          v-model="item.manufacturerId"
+        />
         <label for="inventoryStatus">Inventory Status</label>
-        <input type="text" name="inventoryStatus" v-model="item.inventoryStatus" />
+        <input
+          type="text"
+          name="inventoryStatus"
+          v-model="item.inventoryStatus"
+        />
         <label for="alternativeProducts">Alternative Products</label>
-        <input type="text" name="alternativeProducts" v-model="item.alternativeProducts" />
+        <input
+          type="text"
+          name="alternativeProducts"
+          v-model="item.alternativeProducts"
+        />
         <div>
-          <input type="checkbox" class="checkbox" name="sellable" v-model="item.isSellable" />
+          <input
+            type="checkbox"
+            class="checkbox"
+            name="sellable"
+            v-model="item.isSellable"
+          />
           <label for="sellable">Approved</label>
         </div>
         <div>
@@ -33,15 +58,30 @@
           <label for="drugControlled">Drug Controlled</label>
         </div>
         <div>
-          <input type="checkbox" class="checkbox" name="returnable" v-model="item.isNonReturnable" />
+          <input
+            type="checkbox"
+            class="checkbox"
+            name="returnable"
+            v-model="item.isNonReturnable"
+          />
           <label for="returnable">Returnable</label>
         </div>
         <div>
-          <input type="checkbox" class="checkbox" name="refrigerated" v-model="item.isRefrigerated" />
+          <input
+            type="checkbox"
+            class="checkbox"
+            name="refrigerated"
+            v-model="item.isRefrigerated"
+          />
           <label for="refrigerated">Refrigerated</label>
         </div>
         <div>
-          <input type="checkbox" class="checkbox" name="regulated" v-model="item.isRegulated" />
+          <input
+            type="checkbox"
+            class="checkbox"
+            name="regulated"
+            v-model="item.isRegulated"
+          />
           <label for="regulated">Regulated</label>
         </div>
       </div>
@@ -54,9 +94,9 @@ export default {
   name: "drafts",
   data() {
     return {
+      title: "Edit Drafts",
       storedDrafts: [],
-      drafts: [],
-      title: "Edit Drafts"
+      drafts: []
     };
   },
   props: {
@@ -69,41 +109,30 @@ export default {
     saveDrafts() {
       const draftString = JSON.stringify(this.drafts);
       window.localStorage.setItem("productNumber", draftString);
-    },
-
-    /* loadDrafts() {
-      try {
-        const data = JSON.parse(window.localStorage.getItem("productNumber"));
-        data.forEach(item => this.drafts.push(item));
-      } catch (error) {
-        console.log(error);
-      }
-    } */
+    }
   },
   mounted() {
     try {
       JSON.parse(window.localStorage.getItem("productNumber")).forEach(item =>
-      this.drafts.push(item)
-    );
-    window.localStorage.removeItem("productNumber");
-    }
-    catch {
-      console.log('No existing saved entries for edit')
+        this.drafts.push(item)
+      );
+      //window.localStorage.removeItem("productNumber");
+    } catch {
+      console.log("No existing saved entries for edit");
     }
 
     // This is not loading selectedItems if drafts is empty because of filter working wrong.
-    if (this.selectedItems != null && this.drafts != null) {
-       let filtered = this.drafts.filter(product => !this.selectedItems.includes(product.productNumber));
-        filtered.forEach(id => {{
+    if (this.selectedItems != null) {
+      this.selectedItems.forEach(id => {
+        {
           fetch(`${this.API_URL}/item/${id}`)
-          .then(response => {
-            return response.json();
-          })
-          .then(item => {
-            this.drafts.push(item);
-          });
+            .then(response => {
+              return response.json();
+            })
+            .then(item => {
+              this.drafts.push(item);
+            });
         }
-        
       });
     }
   }
@@ -124,7 +153,6 @@ input {
 }
 input.checkbox {
   display: inline;
-  width: auto;
 }
 span {
   margin-bottom: 5px;
