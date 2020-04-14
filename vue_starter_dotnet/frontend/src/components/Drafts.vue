@@ -166,30 +166,17 @@ export default {
 <style scoped>
 .body-container {
   display: flex;
-<<<<<<< HEAD
-  flex-direction: row;
-  flex-wrap: wrap;
-  
-  
-=======
   flex-wrap: wrap;
   justify-content: space-evenly;
->>>>>>> 13ade536690de3006ecad57254a3389123d59792
 }
 .draft-box {
   display: flex;
   display: block;
   padding: 1rem;
-<<<<<<< HEAD
-  width: 20vw;
-  border: 2px solid #f0ab00;
-
-=======
   margin: 1rem;
   width: 350px;
   border: 2px solid #f0ab00;
   text-align: center;
->>>>>>> 13ade536690de3006ecad57254a3389123d59792
 }
 
 @media only screen and (max-width: 400px) {
