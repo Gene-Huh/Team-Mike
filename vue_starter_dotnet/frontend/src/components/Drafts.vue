@@ -170,6 +170,7 @@ export default {
   justify-content: space-evenly;
 }
 .draft-box {
+  display: flex;
   display: block;
   padding: 1rem;
   margin: 1rem;
@@ -177,6 +178,14 @@ export default {
   border: 2px solid #f0ab00;
   text-align: center;
 }
+
+@media only screen and (max-width: 400px) {
+  .draft-box{
+    min-width: 20vw;
+  }
+  }
+
+
 input {
   width: 100%;
 }
