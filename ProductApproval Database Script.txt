@@ -44,7 +44,7 @@ CREATE TABLE Users (
 
     userIDs int NOT NULL IDENTITY PRIMARY KEY,
 
-    jobtitle varchar(64) NOT NULL,
+    role varchar(64) NOT NULL,
 
     userName varchar(64) NOT NULL,
 
@@ -83,8 +83,8 @@ INSERT INTO ProductList (ProductNumber, ProductDescription, DefaultUOM, isSellab
 INSERT INTO ProductList (ProductNumber, ProductDescription, DefaultUOM, isSellable, CrossReference, ItemType, isDrugControlled, ManufacturerID, InventoryStatus, AlternativeProducts, isNonReturnable, isRefrigerated, isRegulated) VALUES ('0272007','This is a generic product description','EA',1,'1941',1,0,'SMITHS MEDICAL ASD, INC.','BuyToOrder','',0,0,0);
 INSERT INTO ProductList (ProductNumber, ProductDescription, DefaultUOM, isSellable, CrossReference, ItemType, isDrugControlled, ManufacturerID, InventoryStatus, AlternativeProducts, isNonReturnable, isRefrigerated, isRegulated) VALUES ('0282020A','This is a generic product description','EA',1,'16228, 363-GV-2020A, 7562, WH2020A',1,1,'HARTWELL MEDICAL','Stock','',0,0,0);
 
-INSERT INTO Users (jobtitle, userName, password, salt, lastname, firstname) values('Admin', 'alcapone', 'IDdcqRJzZ0WVIqj4rJ2cUd1ORBk=', 'wxQIIXqf2iY=' 'Capone', 'Al');
-INSERT INTO Users (jobtitle, userName, password, salt, lastname, firstname) values('Authorized User', 'johnnymcdee', 'leEWYeTTWDRBkcSpTJacZ/deitQ=', 'L4MNYXee9hI=', 'McDaniels', 'Johnny "Tight-Lips"');
-INSERT INTO Users (jobtitle, userName, password, salt, lastname, firstname) values('Authorized User', 'dannymarzetti', 'K31E2vF148bmu4lVEwUs3nAM0sM=', 'uMYGDxjHbtM=', 'Marzetti', 'Danny "Babyface"');
+INSERT INTO Users (role, userName, password, salt, lastname, firstname) values('Admin', 'alcapone', 'IDdcqRJzZ0WVIqj4rJ2cUd1ORBk=', 'wxQIIXqf2iY=' 'Capone', 'Al');
+INSERT INTO Users (role, userName, password, salt, lastname, firstname) values('Authorized User', 'johnnymcdee', 'leEWYeTTWDRBkcSpTJacZ/deitQ=', 'L4MNYXee9hI=', 'McDaniels', 'Johnny "Tight-Lips"');
+INSERT INTO Users (role, userName, password, salt, lastname, firstname) values('Authorized User', 'dannymarzetti', 'K31E2vF148bmu4lVEwUs3nAM0sM=', 'uMYGDxjHbtM=', 'Marzetti', 'Danny "Babyface"');
 
 COMMIT TRANSACTION
