@@ -105,6 +105,7 @@ export default {
 <style scoped>
 .body-container {
   display: flexbox;
+  flex-direction: row;
 }
 .draft-box {
   display: block;
