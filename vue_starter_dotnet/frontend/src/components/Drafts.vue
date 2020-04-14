@@ -2,7 +2,7 @@
   <div>
     <span>Edit Items:</span>
     <button v-on:click="saveDrafts()">Save</button>
-    <button v-on:click="confirmDrafts()">Confirm</button>
+    <button v-on:click="confirmDrafts()">Commit Changes</button>
 
     <div class="body-container">
       <div class="draft-box" v-for="(item, index) in drafts" :key="index">
@@ -81,10 +81,18 @@ export default {
     } */
   },
   mounted() {
-    JSON.parse(window.localStorage.getItem("productNumber")).forEach(item =>
+    try {
+      JSON.parse(window.localStorage.getItem("productNumber")).forEach(item =>
       this.drafts.push(item)
     );
-    if (this.selectedItems != null) {
+    window.localStorage.removeItem("productNumber");
+    }
+    catch {
+      console.log('No existing saved entries for edit')
+    }
+
+    // This is not loading selectedItems if drafts is empty because of filter working wrong.
+    if (this.selectedItems != null && this.drafts != null) {
        let filtered = this.drafts.filter(product => !this.selectedItems.includes(product.productNumber));
         filtered.forEach(id => {{
           fetch(`${this.API_URL}/item/${id}`)
@@ -110,7 +118,7 @@ export default {
 .draft-box {
   display: block;
   width: 25%;
-  border-bottom: 2px solid #f0ab00;
+  border: 2px solid #f0ab00;
 }
 input {
   width: 100%;
