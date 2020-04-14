@@ -110,6 +110,21 @@ export default {
     saveDrafts() {
       const draftString = JSON.stringify(this.drafts);
       window.localStorage.setItem("productNumber", draftString);
+    },
+    confirmDrafts() {
+      if (this.drafts != null) {
+        this.drafts.forEach(product => {
+          fetch(`${this.API_URL}/item/${product.productNumber}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            body: JSON.stringify(product)
+          }).then(response => response.JSON());
+        });
+        this.drafts = [];
+        window.localStorage.removeItem("productNumber");
+      }
     }
   },
   mounted() {
@@ -117,17 +132,16 @@ export default {
       JSON.parse(window.localStorage.getItem("productNumber")).forEach(item => {
         this.drafts.push(item);
         this.loadedProductNumbers.push(item.productNumber);
-      }
-        
-      );
-      //window.localStorage.removeItem("productNumber");
+      });
     } catch {
       console.log("No existing saved entries for edit");
     }
 
     // This is not loading selectedItems if drafts is empty because of filter working wrong.
     if (this.selectedItems != null) {
-      let checkedForDupes = this.selectedItems.filter(item => !this.loadedProductNumbers.includes(item))
+      let checkedForDupes = this.selectedItems.filter(
+        item => !this.loadedProductNumbers.includes(item)
+      );
       checkedForDupes.forEach(id => {
         {
           fetch(`${this.API_URL}/item/${id}`)
@@ -147,11 +161,15 @@ export default {
 <style scoped>
 .body-container {
   display: flex;
+  flex-wrap: wrap;
 }
 .draft-box {
   display: block;
+  padding: 1rem;
+  margin: 1rem;
   width: 25%;
   border: 2px solid #f0ab00;
+  text-align: center;
 }
 input {
   width: 100%;
