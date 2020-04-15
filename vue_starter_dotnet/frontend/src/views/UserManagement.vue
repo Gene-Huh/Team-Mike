@@ -1,10 +1,15 @@
 <template>
-  <div>
+  <div class="content">
+    <Navbar />
     <div class="options">
-      <button @click="choice='addChoice'">Add User</button>
-      <button @click="choice='editChoice'">Edit User</button>
-      <button @click="choice='disableChoice'">Disable User</button>
-      <button @click="choice='removeChoice'">Remove User</button>
+      <button @click="choice='addChoice'">
+        <font-awesome-icon icon="plus-circle" /> Add User</button>
+      <button @click="choice='editChoice'">
+        <font-awesome-icon icon="edit" /> Edit User</button>
+      <button @click="choice='disableChoice'">
+        <font-awesome-icon icon="ban" /> Disable User</button>
+      <button @click="choice='removeChoice'">
+        <font-awesome-icon icon="minus-circle" /> Remove User</button>
     </div>
     <div class="choice-forms-display">
       <form v-if="choice=='addChoice'">
@@ -88,8 +93,15 @@
 </template>
 
 <script>
+import Navbar from "@/components/Navbar";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+
 export default {
   name: "User-Management",
+  components: {
+    Navbar,
+    FontAwesomeIcon
+  },
   data() {
     return {
       choice: ""
