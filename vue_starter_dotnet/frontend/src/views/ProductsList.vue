@@ -1,12 +1,4 @@
-<template>
-  <div class="products-list">
-    <div class="options">
-      <span>Select List Type:</span>
-      <button v-on:click="getUnapprovedList()">Unapproved</button>
-      <button v-on:click="getApprovedList()">Approved</button>
-      <SearchBar id="search-bar" v-on:filter-list="handleSearch" />
-    </div>
-    <ProductsList :data="data" :search="search" :title="currentList" :API_URL="API_URL" />
+<template> 
   <div class="content">
     <Navbar />
     <span>Select List Type:</span>
@@ -14,7 +6,7 @@
     <button v-on:click="getApprovedList()">Approved</button>
     <ProductsList :data="data" :listType="currentList" :API_URL="API_URL"/>
   </div>
-  </div>
+  
 </template>
 
 <script>
@@ -98,13 +90,8 @@ span {
 .confirm {
   background-color: #004165;
 }
-#search-bar {
-      position: absolute;
-    right: 20px;
-    color: #f0ab00;
-}
 caption {
-  background-color: #f0ab00;
+  background-color: lightgoldenrodyellow;
   color: black;
   width: 100vw; 
 }

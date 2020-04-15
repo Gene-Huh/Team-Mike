@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="confirm"  v-if="listType!=''">
-      <SearchBar v-on:filter-list="handleSearch" />
+      <SearchBar id="search-bar" v-on:filter-list="handleSearch" />
       <button v-on:click="confirmChanges()">
         <font-awesome-icon icon="clipboard-check" />
         <span v-if="listType=='Unapproved Products List'"> Approve Selected</span>
@@ -161,5 +161,9 @@ table {
   margin: 5px;
   border-collapse: collapse;
 }
+/* #search-bar {
+      position: absolute;
+    right: 20px;    
+} */
 
 </style>
