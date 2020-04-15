@@ -26,15 +26,29 @@ namespace ProductApproval.Controllers
         }
 
         [HttpGet]
-        public IList<User> GetUsers()
+        public IList<User> GetAllUsers()
         {
             return dao.GetAllUsers();
+        }
+
+        [HttpGet("getuser/{username}")]
+        public UserEdit GetUser(string username)
+        {
+            User requestedUser = dao.GetUser(username);
+            UserEdit foundUser = new UserEdit();
+
+            foundUser.FirstName = requestedUser.FirstName;
+            foundUser.LastName = requestedUser.LastName;
+            foundUser.Role = requestedUser.Role;
+            foundUser.Username = requestedUser.Username;
+
+            return foundUser;
         }
 
         [HttpPut("edit/{username}")]
         public ActionResult EditUser(string username, [FromBody]User user)
         {
-            if(user.Username != null)
+            if (user.Username != null)
             {
                 user = dao.UpdateUser(user);
             }
@@ -44,27 +58,32 @@ namespace ProductApproval.Controllers
         [HttpPost("add", Name = "AddUser")]
         public string AddUser(User user)
         {
-            string success = user.Username + " successfully added.";
-            string failed = "Username not valid.";
+            string success = $"{user.Username} successfully added.";
+            string failed = $"{user.Username} failed to be added.";
             int response = 0;
 
-            User dbCheck = dao.CheckUser(user);
+            User dbCheck = dao.GetUser(user.Username);
             if (dbCheck.Username != user.Username)
             {
                 response = dao.AddUser(user);
             }
-            
-            return (response==1)?success:failed;
+
+            return (response == 1) ? success : failed;
         }
 
         [HttpDelete("delete/{username}", Name = "DeleteUser")]
-        public int DeleteUser(string username)
+        public string DeleteUser(string username)
         {
+            string success = $"{username} successfully deleted";
+            string failed = $"{username} failed to be removed";
+            int response = 0;
+
             if (username != null)
             {
-                return dao.DeleteUser(username);
+                response = dao.DeleteUser(username);
             }
-            return 0;
+
+            return (response == 1) ? success : failed; ;
         }
     }
 }

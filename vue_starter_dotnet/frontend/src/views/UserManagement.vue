@@ -3,16 +3,16 @@
     <Navbar />
     <div class="options">
       <button @click="choice='addChoice'">
-        <font-awesome-icon icon="plus-circle" />Add User
+        <font-awesome-icon icon="plus-circle" /> Add User
       </button>
       <button @click="choice='editChoice'">
-        <font-awesome-icon icon="edit" />Edit User
+        <font-awesome-icon icon="edit" /> Edit User
       </button>
       <button @click="choice='disableChoice'">
-        <font-awesome-icon icon="ban" />Disable User
+        <font-awesome-icon icon="ban" /> Disable User
       </button>
       <button @click="choice='deleteChoice'">
-        <font-awesome-icon icon="minus-circle" />Delete User
+        <font-awesome-icon icon="minus-circle" /> Delete User
       </button>
     </div>
     <div class="choice-forms-display">
@@ -43,11 +43,24 @@
         </div>
         <button @click.prevent="addUser" type="submit">Confirm Add User</button>
       </form>
-      <form v-if="choice=='editChoice'">
+
+      <div v-if="choice=='editChoice'">
+        <span>Please enter username to be edited:</span>
+        <input
+          type="text"
+          v-model="requestedUserName"
+          required
+          @keyup.enter="getUserInfo"
+          placeholder="Type user name here"
+        />
+        <button @click="getUserInfo">Get User Info</button>
+      </div>
+
+      <form v-if="(editForm.userName !=='' && choice == 'editChoice')">
         <h3>Edit User</h3>
         <div class="form-element">
-          <label for="username">Username:</label>
-          <input id="username" v-model="editForm.userName" type="text" required />
+          <label>Username:</label>
+          <span>{{editForm.userName}}</span>
         </div>
         <div class="form-element">
           <label for="firstName">First Name:</label>
@@ -66,19 +79,64 @@
         </div>
         <button @click.prevent="editUser" type="submit">Confirm Edit</button>
       </form>
-      <form v-if="choice=='disableChoice'">
+
+      <div v-if="choice=='disableChoice'">
+        <span>Please enter username to be edited:</span>
+        <input
+          type="text"
+          v-model="requestedUserName"
+          required
+          @keyup.enter="getUserInfo"
+          placeholder="Type user name here"
+        />
+        <button @click="getUserInfo">Get User Info</button>
+      </div>
+      <form v-if="(choice=='disableChoice' && userName !=='')">
         <h3>Disable User</h3>
         <div class="form-element">
-          <label for="username">Username:</label>
-          <input id="username" v-model="userName" type="text" required />
+          <div>
+            <label>Username:</label>
+            <span>{{userName}}</span>
+          </div>
+          <div>
+            <label>First Name:</label>
+            <span>{{editForm.firstName}}</span>
+          </div>
+          <div>
+            <label>Last Name:</label>
+            <span>{{editForm.lastName}}</span>
+          </div>
         </div>
         <button @click.prevent="disableUser" type="submit">Confirm Disable User</button>
       </form>
-      <form v-if="choice=='deleteChoice'">
+
+      <div v-if="choice=='deleteChoice'">
+        <span>Please enter username to be edited:</span>
+        <input
+          type="text"
+          v-model="requestedUserName"
+          required
+          @keyup.enter="getUserInfo"
+          placeholder="Type user name here"
+        />
+        <button @click="getUserInfo">Get User Info</button>
+      </div>
+
+      <form v-if="(choice=='deleteChoice' && userName !=='')">
         <h3>Delete User</h3>
         <div class="form-element">
-          <label for="username">Username:</label>
-          <input id="username" v-model="userName" type="text" required />
+          <div>
+            <label>Username:</label>
+            <span>{{userName}}</span>
+          </div>
+          <div>
+            <label>First Name:</label>
+            <span>{{editForm.firstName}}</span>
+          </div>
+          <div>
+            <label>Last Name:</label>
+            <span>{{editForm.lastName}}</span>
+          </div>
         </div>
         <button @click.prevent="deleteUser" type="submit">Confirm Delete User</button>
       </form>
@@ -113,10 +171,26 @@ export default {
         userName: "",
         role: ""
       },
-      userName: ""
+      userName: "",
+      requestedUserName: ""
     };
   },
   methods: {
+    getUserInfo() {
+      fetch(`${this.API_URL}/users/getuser/${this.requestedUserName}`)
+        .then(response => {
+          return response.json();
+        })
+        .then(userInfo => {
+          this.editForm.firstName = userInfo.firstName;
+          this.editForm.lastName = userInfo.lastName;
+          this.editForm.role = userInfo.role;
+          this.editForm.userName = userInfo.username;
+          this.userName = userInfo.username;
+        });
+      this.requestedUserName = "";
+    },
+
     addUser() {
       fetch(`${this.API_URL}/users/add`, {
         method: "POST",
@@ -140,22 +214,39 @@ export default {
           "Content-Type": "application/json; charset=utf-8"
         },
         body: JSON.stringify(this.editForm)
-      }).then(console.log(Response.text()));
+      });
       this.editForm.firstName = "";
       this.editForm.lastName = "";
       this.editForm.userName = "";
       this.editForm.role = "";
+      this.userName = "";
     },
 
     disableUser() {
-      fetch(`${this.API_URL}/users/disable/${this.userName}`);
+      this.editForm.role = "Inactive";
+      fetch(`${this.API_URL}/users/edit/${this.editForm.userName}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        body: JSON.stringify(this.editForm)
+      });
+      this.editForm.firstName = "";
+      this.editForm.lastName = "";
+      this.editForm.userName = "";
+      this.userName = "";
+      this.requestedUserName = "";
     },
 
     deleteUser() {
       fetch(`${this.API_URL}/users/delete/${this.userName}`, {
         method: "DELETE"
-      }
-      );
+      });
+      this.editForm.firstName = "";
+      this.editForm.lastName = "";
+      this.editForm.userName = "";
+      this.userName = "";
+      this.requestedUserName = "";
     }
   }
 };
