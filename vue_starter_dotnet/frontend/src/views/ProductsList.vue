@@ -6,7 +6,7 @@
     <button v-on:click="getApprovedList()">Approved</button>
     <ProductsList :data="data" :listType="currentList" :API_URL="API_URL"/>
   </div>
-  </div>
+  
 </template>
 
 <script>
@@ -85,18 +85,13 @@ span {
 }
 .products-list {
   padding-left: 10px;
-  
+ 
 }
 .confirm {
   background-color: #004165;
 }
-#search-bar {
-      position: absolute;
-    right: 20px;
-    color: #f0ab00;
-}
 caption {
-  background-color: #f0ab00;
+  background-color: lightgoldenrodyellow;
   color: black;
   width: 100vw; 
 }

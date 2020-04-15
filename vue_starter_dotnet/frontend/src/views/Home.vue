@@ -1,9 +1,7 @@
-<template>
-  <div class="home">
+<template>  
     <div class="content">
-      <navbar/>
-      <h1>Welcome</h1>
-    </div>
+      <navbar/>       
+      </div>      
 </template>
 
 <script>
