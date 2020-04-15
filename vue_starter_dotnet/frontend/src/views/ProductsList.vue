@@ -1,11 +1,12 @@
 <template>
   <div class="products-list">
-    <span>Select List Type:</span>
-    <button v-on:click="getUnapprovedList()">Unapproved</button>
-    <button v-on:click="getApprovedList()">Approved</button>
-    <SearchBar v-on:filter-list="handleSearch" />
-    <ProductsList :data="data" :search="search" :title="currentList" :API_URL="API_URL"/>
-    
+    <div class="options">
+      <span>Select List Type:</span>
+      <button v-on:click="getUnapprovedList()">Unapproved</button>
+      <button v-on:click="getApprovedList()">Approved</button>
+      <SearchBar id="search-bar" v-on:filter-list="handleSearch" />
+    </div>
+    <ProductsList :data="data" :search="search" :title="currentList" :API_URL="API_URL" />
   </div>
 </template>
 
@@ -29,8 +30,11 @@ export default {
     };
   },
   methods: {
-    edit(){
-      this.$router.push({name: 'edit', params:{selectedItems: this.selectedItems}})
+    edit() {
+      this.$router.push({
+        name: "edit",
+        params: { selectedItems: this.selectedItems }
+      });
     },
     handleSearch(query) {
       console.log("filter-list", query);
@@ -74,5 +78,31 @@ button {
 button:hover {
   background-color: #f0ab00;
   color: black;
+}
+span {
+  padding-top: 15px;
+}
+.options {
+  display: flex;
+  padding-top: 10px;
+  background-color: #004165;
+  color: #f0ab00
+}
+.products-list {
+  padding-left: 10px;
+  
+}
+.confirm {
+  background-color: #004165;
+}
+#search-bar {
+      position: absolute;
+    right: 20px;
+    color: #f0ab00;
+}
+caption {
+  background-color: #f0ab00;
+  color: black;
+  width: 100vw; 
 }
 </style>

@@ -1,37 +1,20 @@
 <template>
-  <div class="login">
+  <div class="content">
     <h1>Login</h1>
     <form>
       <div class="form-element">
         <label for="username">Username:</label>
-        <input id="username" type="text" required />
+        <input id="username" type="text" />
       </div>
 
       <div class="form-element">
         <label for="password">Password:</label>
-        <input id="password" type="text" required />
+        <input id="password" type="text" />
       </div>
     </form>
     <router-link :to="{name: 'home'}">
       <button>Sign In</button>
-    </router-link>    
-    <div class="content">
-      <h1>Login</h1>
-      <form>
-        <div class="form-element">
-          <label for="username">Username:</label>
-          <input id="username" type="text" />
-        </div>
-
-        <div class="form-element">
-          <label for="password">Password:</label>
-          <input id="password" type="text" />
-        </div>
-      </form>
-      <router-link :to="{name: 'home'}">
-        <button>Sign In</button>
-      </router-link>
-    </div>
+    </router-link>
   </div>
 </template>
 
@@ -49,7 +32,7 @@ export default {
       },
       invalidCredentials: false
     };
-  },
+  }
   // methods: {
   //   login() {
   //     fetch(, {
@@ -83,8 +66,7 @@ export default {
 </script>
 
 <style scoped>
-    
-
-
-
+label {
+  padding-right: 10px;
+}
 </style>

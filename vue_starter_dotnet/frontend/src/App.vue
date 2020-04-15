@@ -13,26 +13,26 @@
         <a href="http://www.sarnova.com/privacy-policy/">Privacy Policy</a>
       </p>
       <div class="copy">© 2020, Sarnova, Inc. All Rights Reserved</div>
-    </div>
-    <div class="social">
-      <a href="https://www.facebook.com/SarnovaHC/" target="_blank" title="Visit Us On Facebook">
-        <img
-          src="http://www.sarnova.com/wp-content/plugins/acurax-social-media-widget/images/themes/25/facebook.png"
-          style="border:0px;"
-          alt="Visit Us On Facebook"
-        />
-      </a>
-      <a
-        href="https://www.linkedin.com/company/sarnova"
-        target="_blank"
-        title="Visit Us On Linkedin"
-      >
-        <img
-          src="http://www.sarnova.com/wp-content/plugins/acurax-social-media-widget/images/themes/25/linkedin.png"
-          style="border:0px;"
-          alt="Visit Us On Linkedin"
-        />
-      </a>
+      <div class="social">
+        <a href="https://www.facebook.com/SarnovaHC/" target="_blank" title="Visit Us On Facebook">
+          <img
+            src="http://www.sarnova.com/wp-content/plugins/acurax-social-media-widget/images/themes/25/facebook.png"
+            style="border:0px;"
+            alt="Visit Us On Facebook"
+          />
+        </a>
+        <a
+          href="https://www.linkedin.com/company/sarnova"
+          target="_blank"
+          title="Visit Us On Linkedin"
+        >
+          <img
+            src="http://www.sarnova.com/wp-content/plugins/acurax-social-media-widget/images/themes/25/linkedin.png"
+            style="border:0px;"
+            alt="Visit Us On Linkedin"
+          />
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -43,6 +43,8 @@ export default {};
 
 <style>
 body {
+  height: 100vh;
+  width: 100vw;
   background-color: #ffffff;
   background-repeat: repeat-all;
   background-position: center center;
@@ -63,6 +65,9 @@ body {
   line-height: 22px;
 }
 #footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   padding: 1px 10px 10px 20px;
   display: block;
   color: #d9d9d9;
