@@ -12,6 +12,7 @@ namespace ProductApproval.DAL
         User DeleteUser(User user);
         User UpdateUser(User user);
         IList<User> GetAllUsers();
+        User CheckUser(User user);
         //bool IsUsernameAndPasswordValid();
     }
 }

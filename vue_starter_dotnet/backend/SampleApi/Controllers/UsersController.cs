@@ -38,13 +38,18 @@ namespace ProductApproval.Controllers
             return Ok();
         }
 
-        [HttpPost("Add/{username}", Name = "AddUser")]
-        public ActionResult AddUser(string username, [FromBody]User user)
+        [HttpPost("Add", Name = "AddUser")]
+        public ActionResult AddUser(User user)
         {
-            if(user.Username == null)
+            User dbCheck = dao.CheckUser(user);
+            if (dbCheck.Username != user.Username)
             {
                 user = dao.AddUser(user);
             }
+            //else
+            //{
+               //return username not available
+            //}
             return Ok();
         }
 
