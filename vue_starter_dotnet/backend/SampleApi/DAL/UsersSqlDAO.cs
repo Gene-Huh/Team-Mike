@@ -18,9 +18,9 @@ namespace ProductApproval.DAL
         }
 
         private string GetAllUsersSql = "SELECT * FROM users";
-        private string AddUserSql = "INSERT INTO users (role, username, password, salt) " +
-            "VALUES(@role, @username, @password, @salt);";
-        private string UpdateUserSql = "UPDATE users SET role = @role " +
+        private string AddUserSql = "INSERT INTO users (role, userName, password, salt, lastname, firstname) " +
+            "VALUES(@role, @userName, @password, @salt, @lastname, @firstname);";
+        private string UpdateUserSql = "UPDATE users SET role = @role lastname = @lastname firstname = @firstname " +
             "WHERE userID = @id;";
         private string DeleteUserSql = "DELETE FROM users WHERE userID = @id";
 
@@ -51,7 +51,7 @@ namespace ProductApproval.DAL
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(AddUserSql, conn);
                 cmd.Parameters.AddWithValue("@role", user.Role);
-                cmd.Parameters.AddWithValue("@username", user.Username);
+                cmd.Parameters.AddWithValue("@userName", user.Username);
                 cmd.Parameters.AddWithValue("@password", hashedPassword.Password);
                 cmd.Parameters.AddWithValue("@salt", hashedPassword.Salt);
                 cmd.Parameters.AddWithValue("@lastname", user.LastName);
@@ -97,7 +97,7 @@ namespace ProductApproval.DAL
             User user = new User();
 
             user.UserId = Convert.ToInt32(reader["userID"]);
-            user.Username = Convert.ToString(reader["username"]);
+            user.Username = Convert.ToString(reader["userName"]);
             user.Role = Convert.ToString(reader["role"]);
 
             return user;

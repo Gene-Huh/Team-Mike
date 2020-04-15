@@ -11,10 +11,10 @@
 
     <div class="body-container">
       <div class="draft-box" v-for="(item, index) in drafts" :key="index">
-        <div class="body-name">
-          <font-awesome-icon icon="trash" @click="discardItem(index)" style="color: red"/>
+        <span>
+          <font-awesome-icon icon="minus-circle" @click="discardItem(index)" style="color: red"/>
           Product Number: {{ item.productNumber }}
-        </div>
+        </span>
         <label for="description">Description</label>
         <input type="text" name="description" v-model="item.productDescription" />
         <label for="sellable">Cross Reference</label>
@@ -57,6 +57,7 @@
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
 export default {
   name: "drafts",
   components: { FontAwesomeIcon },
@@ -144,9 +145,7 @@ export default {
   border: 2px solid #f0ab00;
   text-align: center;
 }
-.body-name {
-  font-weight: 600;
-}
+
 @media only screen and (max-width: 400px) {
   .draft-box {
     min-width: 20vw;

@@ -1,4 +1,4 @@
-<template> 
+<template>
   <div class="content">
     <Navbar />
     <span>Select List Type:</span>
@@ -85,7 +85,7 @@ span {
 }
 .products-list {
   padding-left: 10px;
-  
+ 
 }
 .confirm {
   background-color: #004165;
