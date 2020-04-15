@@ -6,11 +6,14 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using ProductApproval.DAL;
+using ProductApproval.Password_and_Authentication_Helpers;
+using static ProductApproval.Password_and_Authentication_Helpers.HashProvider;
 
 namespace ProductApproval
 {
@@ -60,8 +63,8 @@ namespace ProductApproval
                     // The rules for token validation
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = false,                 // issuer not required
-                        ValidateAudience = false,               // audience not required
+                        ValidateIssuer = true,                 // issuer not required
+                        ValidateAudience = true,               // audience not required
                         ValidateLifetime = true,                // token must not have expired
                         ValidateIssuerSigningKey = true,        // token signature must match so as not to be tampered with
                         NameClaimType = System.Security.Claims.ClaimTypes.NameIdentifier,   // allows us to use sub for username
@@ -72,8 +75,8 @@ namespace ProductApproval
                 });
 
             // Dependency Injection configuration
-            //services.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(Configuration["JwtSecret"]));
-            //services.AddSingleton<IPasswordHasher>(ph => new PasswordHasher());
+            services.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(Configuration["JwtSecret"]));
+            //services.AddSingleton<IPasswordHasher>(ph => new HashProvider());
 
             services.AddTransient<IProductDAO>(m => new ProductSqlDAO(Configuration.GetConnectionString("Default")));
             services.AddTransient<IUsersDAO>(m => new UsersSqlDAO(Configuration.GetConnectionString("Default")));
@@ -97,7 +100,10 @@ namespace ProductApproval
                     return new BadRequestObjectResult(result);
                 };
             });
+
         }
+
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// <summary>
@@ -110,10 +116,12 @@ namespace ProductApproval
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
 
@@ -132,6 +140,7 @@ namespace ProductApproval
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
         }
     }
 }
