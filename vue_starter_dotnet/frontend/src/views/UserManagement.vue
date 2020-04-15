@@ -11,8 +11,8 @@
       <button @click="choice='disableChoice'">
         <font-awesome-icon icon="ban" />Disable User
       </button>
-      <button @click="choice='removeChoice'">
-        <font-awesome-icon icon="minus-circle" />Remove User
+      <button @click="choice='deleteChoice'">
+        <font-awesome-icon icon="minus-circle" />Delete User
       </button>
     </div>
     <div class="choice-forms-display">
@@ -28,7 +28,7 @@
         </div>
         <div class="form-element">
           <label for="username">Username :</label>
-          <input id="username" v-model="addForm.username" type="text" required />
+          <input id="username" v-model="addForm.userName" type="text" required />
         </div>
         <div class="form-element">
           <label for="password">Password :</label>
@@ -47,21 +47,21 @@
         <h3>Edit User</h3>
         <div class="form-element">
           <label for="username">Username:</label>
-          <input id="username" type="text" required />
+          <input id="username" v-model="editForm.userName" type="text" required />
         </div>
         <div class="form-element">
           <label for="firstName">First Name:</label>
-          <input id="firstName" type="text" required />
+          <input id="firstName" v-model="editForm.firstName" type="text" required />
         </div>
         <div class="form-element">
           <label for="lastName">Last Name:</label>
-          <input id="lastName" type="text" required />
+          <input id="lastName" v-model="editForm.lastName" type="text" required />
         </div>
         <div class="form-element">
           <label for="role">Role:</label>
-          <input name="role" type="radio" value="User" />
+          <input name="role" v-model="editForm.role" type="radio" value="User" />
           <label for="User">User</label>
-          <input name="role" type="radio" value="Admin" />
+          <input name="role" v-model="editForm.role" type="radio" value="Admin" />
           <label for="Admin">Administrator</label>
         </div>
         <button @click.prevent="editUser" type="submit">Confirm Edit</button>
@@ -70,17 +70,17 @@
         <h3>Disable User</h3>
         <div class="form-element">
           <label for="username">Username:</label>
-          <input id="username" type="text" required />
+          <input id="username" v-model="userName" type="text" required />
         </div>
         <button @click.prevent="disableUser" type="submit">Confirm Disable User</button>
       </form>
-      <form v-if="choice=='removeChoice'">
-        <h3>Remove User</h3>
+      <form v-if="choice=='deleteChoice'">
+        <h3>Delete User</h3>
         <div class="form-element">
           <label for="username">Username:</label>
-          <input id="username" type="text" required />
+          <input id="username" v-model="userName" type="text" required />
         </div>
-        <button @click.prevent="removeUser" type="submit">Confirm Remove User</button>
+        <button @click.prevent="deleteUser" type="submit">Confirm Delete User</button>
       </form>
     </div>
   </div>
@@ -98,15 +98,22 @@ export default {
   data() {
     return {
       choice: "",
+      API_URL: "http://localhost:64458/api",
+
       addForm: {
         firstName: "",
         lastName: "",
         userName: "",
         password: "",
-        role: "",        
+        role: ""
       },
-       API_URL: process.env.APP_VUE_CONNECTION_STRING,
-      
+      editForm: {
+        firstName: "",
+        lastName: "",
+        userName: "",
+        role: ""
+      },
+      userName: ""
     };
   },
   methods: {
@@ -118,13 +125,37 @@ export default {
         },
         body: JSON.stringify(this.addForm)
       })
-        // .then(response => response.json())
-        .then(response => console.log(response.Body.text()));
+        //.then(response => response.json())
+        .then(response => console.log(response));
       this.addForm.firstName = "";
       this.addForm.lastName = "";
       this.addForm.userName = "";
       this.addForm.password = "";
       this.addForm.role = "";
+    },
+    editUser() {
+      fetch(`${this.API_URL}/users/edit/${this.editForm.userName}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        body: JSON.stringify(this.editForm)
+      }).then(console.log(Response.text()));
+      this.editForm.firstName = "";
+      this.editForm.lastName = "";
+      this.editForm.userName = "";
+      this.editForm.role = "";
+    },
+
+    disableUser() {
+      fetch(`${this.API_URL}/users/disable/${this.userName}`);
+    },
+
+    deleteUser() {
+      fetch(`${this.API_URL}/users/delete/${this.userName}`, {
+        method: "DELETE"
+      }
+      );
     }
   }
 };

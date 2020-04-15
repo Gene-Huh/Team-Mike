@@ -55,13 +55,13 @@ namespace ProductApproval.Controllers
         }
 
         [HttpDelete("delete/{username}", Name = "DeleteUser")]
-        public ActionResult DeleteUser(string username, [FromBody]User user)
+        public int DeleteUser(string username)
         {
-            if (user.Username != null)
+            if (username != null)
             {
-                user = dao.DeleteUser(user);
+                return dao.DeleteUser(username);
             }
-            return Ok();
+            return 0;
         }
     }
 }

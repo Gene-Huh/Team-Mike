@@ -63,17 +63,18 @@ export default {
   name: "products-list",
   components: {
     FontAwesomeIcon,
-    SearchBar
+    SearchBar,
+    
   },
   props: {
     listType: String,
     data: Array,
-    API_URL: String
   },
   data() {
     return {
       selectedItems: [],
-      search: ""
+      search: "",
+      API_URL: "http://localhost:64458/api"
     };
   },
    methods: {
