@@ -18,6 +18,7 @@ namespace ProductApproval.DAL
         }
 
         private string GetAllUsersSql = "SELECT * FROM users";
+        private string getUserSql = "Select * FROM users WHERE userName = @userName";
         private string AddUserSql = "INSERT INTO users (role, userName, password, salt, lastname, firstname) " +
             "VALUES(@role, @userName, @password, @salt, @lastname, @firstname);";
         private string UpdateUserSql = "UPDATE users SET role = @role, lastname = @lastname, firstname = @firstname " +
@@ -39,6 +40,23 @@ namespace ProductApproval.DAL
                 }
             }
             return allUsers;
+        }
+
+        public User CheckUser(User user)
+        {
+            User finalUser = new User();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(getUserSql, conn);
+                cmd.Parameters.AddWithValue("@username", user.Username);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    finalUser.Username = Convert.ToString(reader["userName"]);
+                }
+            }
+            return finalUser;
         }
 
         public User AddUser(User user)
