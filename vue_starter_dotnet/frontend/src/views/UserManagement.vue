@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="content">  
     <div class="options">
       <button @click="choice='addChoice'">Add User</button>
       <button @click="choice='editChoice'">Edit User</button>
