@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <router-link :to="{name: 'products-list'}" exact class="products" tag="button" v-if="$route.name!=='products-list'">
-      <font-awesome-icon icon="eye" /> Product List
+      <font-awesome-icon icon="list" /> Product List
     </router-link>
 
     <router-link :to="{name: 'edit'}" class="edit" tag="button" v-if="$route.name!=='edit'">
