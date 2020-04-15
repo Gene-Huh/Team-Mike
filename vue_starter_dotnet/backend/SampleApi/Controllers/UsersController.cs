@@ -22,13 +22,13 @@ namespace ProductApproval.Controllers
             dao = dataAccessLayer;
         }
 
-        [HttpGet("{username}", Name = "GetUsers")]
+        [HttpGet]
         public IList<User> GetUsers()
         {
             return dao.GetAllUsers();
         }
 
-        [HttpPut("{username}/Edit", Name = "EditUser")]
+        [HttpPut("Edit/{username}", Name = "EditUser")]
         public ActionResult EditUser(string username, [FromBody]User user)
         {
             if(user.Username != null)
@@ -38,7 +38,7 @@ namespace ProductApproval.Controllers
             return Ok();
         }
 
-        [HttpPost("{username}/Add", Name = "AddUser")]
+        [HttpPost("Add/{username}", Name = "AddUser")]
         public ActionResult AddUser(string username, [FromBody]User user)
         {
             if(user.Username == null)
@@ -48,7 +48,7 @@ namespace ProductApproval.Controllers
             return Ok();
         }
 
-        [HttpDelete("{username}/Delete", Name = "DeleteUser")]
+        [HttpDelete("Delete/{username}", Name = "DeleteUser")]
         public ActionResult DeleteUser(string username, [FromBody]User user)
         {
             if (user.Username != null)
