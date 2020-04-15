@@ -118,6 +118,8 @@ namespace ProductApproval.DAL
             user.UserId = Convert.ToInt32(reader["userID"]);
             user.Username = Convert.ToString(reader["userName"]);
             user.Role = Convert.ToString(reader["role"]);
+            user.LastName = Convert.ToString(reader["lastname"]);
+            user.FirstName = Convert.ToString(reader["firstname"]);
 
             return user;
         }
