@@ -23,7 +23,7 @@ export default {
     return {
       data: [],
       currentList: "",
-      API_URL: "http://localhost:64458/api",
+      API_URL: process.env.APP_VUE_CONNECTION_STRING,
       selectedItems: []
     };
   },

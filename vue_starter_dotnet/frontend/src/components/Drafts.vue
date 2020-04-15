@@ -66,11 +66,9 @@ export default {
       title: "Edit Drafts",
       storedDrafts: [],
       drafts: [],
-      loadedProductNumbers: []
+      loadedProductNumbers: [],
+      API_URL: process.env.APP_VUE_CONNECTION_STRING
     };
-  },
-  props: {
-    API_URL: String
   },
   created() {
     this.selectedItems = this.$route.params.selectedItems;

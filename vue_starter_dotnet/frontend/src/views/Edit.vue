@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <Navbar />
-    <Drafts :selectedItems="selectedItems" :API_URL="API_URL" />
+    <Drafts :selectedItems="selectedItems" />
   </div>
 </template>
 
@@ -20,7 +20,6 @@ export default {
   data() {
     return {
       
-      API_URL: "http://localhost:64458/api"
     };
   }
 };
