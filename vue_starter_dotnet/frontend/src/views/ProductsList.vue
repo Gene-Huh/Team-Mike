@@ -23,7 +23,8 @@ export default {
     return {
       data: [],
       currentList: "",
-      selectedItems: []
+      selectedItems: [],
+      API_URL: "http://localhost:64458/api"
     };
   },
   methods: {
