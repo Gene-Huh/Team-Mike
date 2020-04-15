@@ -10,10 +10,10 @@ namespace ProductApprovalTests
     [TestClass]
     public class ParentTest
     {
-        private TransactionScope trans;
-
         //Change this to correct DB
         protected string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=ProductApproval;Integrated Security=True";
+
+        public TransactionScope trans;
 
         [TestInitialize]
         public void Setup()

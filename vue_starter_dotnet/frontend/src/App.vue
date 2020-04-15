@@ -1,14 +1,38 @@
 <template>
   <div id="app">
-    
-    <div class="content">
-      <router-view />
-      <div id="footer">
-        <p>
-          <a href="/privacy-policy/">Privacy Policy</a>
-        </p>
-        <div class="copy">Copyright © 2020, Sarnova, Inc. All Rights Reserved</div>
-      </div>
+    <header>
+      <title>Product Approval</title>
+    </header>
+    <img
+      src="http://www.sarnova.com/wp-content/uploads/2014/05/Sarnova-Logo_2017_RGB-1.png"
+      id="logo"
+    />
+    <router-view />
+    <div id="footer">
+      <p>
+        <a href="http://www.sarnova.com/privacy-policy/">Privacy Policy</a>
+      </p>
+      <div class="copy">© 2020, Sarnova, Inc. All Rights Reserved</div>
+    </div>
+    <div class="social">
+      <a href="https://www.facebook.com/SarnovaHC/" target="_blank" title="Visit Us On Facebook">
+        <img
+          src="http://www.sarnova.com/wp-content/plugins/acurax-social-media-widget/images/themes/25/facebook.png"
+          style="border:0px;"
+          alt="Visit Us On Facebook"
+        />
+      </a>
+      <a
+        href="https://www.linkedin.com/company/sarnova"
+        target="_blank"
+        title="Visit Us On Linkedin"
+      >
+        <img
+          src="http://www.sarnova.com/wp-content/plugins/acurax-social-media-widget/images/themes/25/linkedin.png"
+          style="border:0px;"
+          alt="Visit Us On Linkedin"
+        />
+      </a>
     </div>
   </div>
 </template>
@@ -18,10 +42,6 @@ export default {};
 </script>
 
 <style>
-a {
-  color: #f0ab00;
-}
-
 body {
   background-color: #ffffff;
   background-repeat: repeat-all;
@@ -33,15 +53,20 @@ body {
   line-height: 22px;
   margin: 0;
 }
-#app {
+.content {
   background-color: #004165;
   color: #ffffff;
-  padding: 20px;
+  padding: 5px 20px;
+  font-family: "Open sans", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
 }
 #footer {
-  padding: 1px 10px 10px 10px;
+  padding: 1px 10px 10px 20px;
+  display: block;
   color: #d9d9d9;
-  background-color: #004165;
+  background-color: #00324c;
 }
 button {
   background-color: transparent;
@@ -52,8 +77,22 @@ button {
   line-height: 18px;
 }
 img {
-  width: 15%;
+  width: 30%;
   height: auto;
   margin-left: 20px;
+}
+a,
+a:visited {
+  text-decoration: none;
+  color: #d9d9d9;
+}
+.social {
+  background-color: #00324c;
+  text-align: right;
+  padding-right: 20px;
+}
+.social img {
+  width: 32px;
+  margin-left: 1px;
 }
 </style>
