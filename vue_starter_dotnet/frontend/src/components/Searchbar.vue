@@ -1,28 +1,44 @@
 <template>
   <div>
-    <label for="search">Search: </label>
+    <label for="search">
+      <font-awesome-icon icon="search" />Search Filter:
+    </label>
     <input
       type="text"
       id="search"
-      name="search"
+      v-model=searchString
       v-on:keyup="filterList"
-      placeholder="Enter search here"
+      placeholder="Enter search filter here"
     />
   </div>
 </template>
 
 <script>
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 export default {
-    methods: {
-        filterList() {
-            const query = document.getElementById('search').value;
-            this.$emit('filter-list', query);
-        }
+  data() {
+    return {
+      searchString: ""
+    };
+  },
+  mounted(){
+    this.searchString = "";
+  },
+  methods: {
+    filterList() {
+      this.$emit("filter-list", this.searchString);
     }
-}
+  },
+  components: {
+    FontAwesomeIcon
+  }
+};
 </script>
 <style scoped>
-label{
+label {
   margin-right: 20px;
+}
+input {
+  width: 50%;
 }
 </style>

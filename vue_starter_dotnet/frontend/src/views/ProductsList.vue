@@ -7,22 +7,27 @@
       <SearchBar id="search-bar" v-on:filter-list="handleSearch" />
     </div>
     <ProductsList :data="data" :search="search" :title="currentList" :API_URL="API_URL" />
+  <div class="content">
+    <Navbar />
+    <span>Select List Type:</span>
+    <button v-on:click="getUnapprovedList()">Unapproved</button>
+    <button v-on:click="getApprovedList()">Approved</button>
+    <ProductsList :data="data" :listType="currentList" :API_URL="API_URL"/>
   </div>
 </template>
 
 <script>
 import ProductsList from "@/components/ProductsList";
-import SearchBar from "@/components/Searchbar";
+import Navbar from "@/components/Navbar";
 
 export default {
   name: "products-list",
   components: {
     ProductsList,
-    SearchBar
+    Navbar
   },
   data() {
     return {
-      search: "",
       data: [],
       currentList: "",
       API_URL: "http://localhost:64458/api",
@@ -36,10 +41,7 @@ export default {
         params: { selectedItems: this.selectedItems }
       });
     },
-    handleSearch(query) {
-      console.log("filter-list", query);
-      this.search = query;
-    },
+    
 
     getUnapprovedList() {
       fetch(`${this.API_URL}/products/0`)
@@ -105,4 +107,6 @@ caption {
   color: black;
   width: 100vw; 
 }
+
+
 </style>

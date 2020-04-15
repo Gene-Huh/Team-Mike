@@ -76,10 +76,17 @@ body {
 button {
   background-color: transparent;
   border: 1px solid #bbbbbb;
+  border-radius: 25px;
   color: #ffffff;
   cursor: pointer;
-  margin: 0 5px 20px 0;
   line-height: 18px;
+  margin: 1% 1% 1% 1%;
+  padding: 5px 10px;
+  font-weight: bold;
+}
+button:hover {
+  background-color: #f0ab00;
+  color: black;
 }
 img {
   width: 30%;
@@ -99,5 +106,8 @@ a:visited {
 .social img {
   width: 32px;
   margin-left: 1px;
+}
+hr {
+  color: #f0ab00;
 }
 </style>
