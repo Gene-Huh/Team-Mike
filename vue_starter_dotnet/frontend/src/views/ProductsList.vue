@@ -6,6 +6,7 @@
     <button v-on:click="getApprovedList()">Approved</button>
     <ProductsList :data="data" :listType="currentList" :API_URL="API_URL"/>
   </div>
+  </div>
 </template>
 
 <script>
