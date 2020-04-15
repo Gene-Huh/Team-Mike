@@ -20,5 +20,7 @@ namespace ProductApprovalTests.Tests
             int expectedResult = GetRowCount("users");
             Assert.AreEqual(expectedResult, testResult);
         }
+
+
     }
 }

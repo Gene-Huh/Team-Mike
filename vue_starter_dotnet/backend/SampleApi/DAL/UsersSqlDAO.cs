@@ -21,8 +21,8 @@ namespace ProductApproval.DAL
         private string AddUserSql = "INSERT INTO users (role, username, password, salt) " +
             "VALUES(@role, @username, @password, @salt);";
         private string UpdateUserSql = "UPDATE users SET role = @role " +
-            "WHERE id = @id;";
-        private string DeleteUserSql = "DELETE FROM users WHERE id = @id";
+            "WHERE userID = @id;";
+        private string DeleteUserSql = "DELETE FROM users WHERE userID = @id";
 
         public IList<User> GetAllUsers()
         {
@@ -96,7 +96,7 @@ namespace ProductApproval.DAL
         {
             User user = new User();
 
-            user.UserId = Convert.ToInt32(reader["id"]);
+            user.UserId = Convert.ToInt32(reader["userID"]);
             user.Username = Convert.ToString(reader["username"]);
             user.Role = Convert.ToString(reader["role"]);
 

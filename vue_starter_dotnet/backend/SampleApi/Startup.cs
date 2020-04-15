@@ -75,8 +75,8 @@ namespace ProductApproval
             //services.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(Configuration["JwtSecret"]));
             //services.AddSingleton<IPasswordHasher>(ph => new PasswordHasher());
 
-            services.AddTransient<IProductDAO>(m => new ProductSqlDAO(Configuration.GetConnectionString("Products")));
-            services.AddTransient<IUsersDAO>(m => new UsersSqlDAO(Configuration.GetConnectionString("Users")));
+            services.AddTransient<IProductDAO>(m => new ProductSqlDAO(Configuration.GetConnectionString("Default")));
+            services.AddTransient<IUsersDAO>(m => new UsersSqlDAO(Configuration.GetConnectionString("Default")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
