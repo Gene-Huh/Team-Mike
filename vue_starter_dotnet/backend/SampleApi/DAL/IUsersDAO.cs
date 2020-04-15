@@ -8,7 +8,7 @@ namespace ProductApproval.DAL
 {
     public interface IUsersDAO
     {
-        User AddUser(User user);
+        int AddUser(User user);
         User DeleteUser(User user);
         User UpdateUser(User user);
         IList<User> GetAllUsers();

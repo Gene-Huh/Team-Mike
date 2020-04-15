@@ -103,11 +103,10 @@ export default {
         lastName: "",
         userName: "",
         password: "",
-        role: ""
+        role: "",        
       },
-      props: {
-        API_URL: String
-      }
+       API_URL: "http://localhost:64458/api",
+      
     };
   },
   methods: {
@@ -119,8 +118,8 @@ export default {
         },
         body: JSON.stringify(this.addForm)
       })
-        .then(response => response.JSON())
-        .then(response => console.log(response.text()));
+        // .then(response => response.json())
+        .then(response => console.log(response.Body.text()));
       this.addForm.firstName = "";
       this.addForm.lastName = "";
       this.addForm.userName = "";

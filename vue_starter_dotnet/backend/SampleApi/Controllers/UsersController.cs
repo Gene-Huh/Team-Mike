@@ -43,17 +43,15 @@ namespace ProductApproval.Controllers
         {
             string success = user.Username + " successfully added.";
             string failed = "Username not valid.";
+            int response = 0;
 
             User dbCheck = dao.CheckUser(user);
             if (dbCheck.Username != user.Username)
             {
-                user = dao.AddUser(user);
+                response = dao.AddUser(user);
             }
-            else
-            {
-                return failed;
-            }
-            return success;
+            
+            return (response==1)?success:failed;
         }
 
         [HttpDelete("delete/{username}", Name = "DeleteUser")]

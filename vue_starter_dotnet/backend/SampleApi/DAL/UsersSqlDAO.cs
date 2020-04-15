@@ -59,10 +59,11 @@ namespace ProductApproval.DAL
             return finalUser;
         }
 
-        public User AddUser(User user)
+        public int AddUser(User user)
         {
             HashProvider hp = new HashProvider();
             HashedPassword hashedPassword = hp.HashPassword(user.Password);
+            int result = 0;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -74,10 +75,9 @@ namespace ProductApproval.DAL
                 cmd.Parameters.AddWithValue("@salt", hashedPassword.Salt);
                 cmd.Parameters.AddWithValue("@lastname", user.LastName);
                 cmd.Parameters.AddWithValue("@firstname", user.FirstName);
-                cmd.ExecuteNonQuery();
-
-                return user;
+                result = cmd.ExecuteNonQuery();                
             }
+            return result;
         }
 
         public User UpdateUser(User user)
