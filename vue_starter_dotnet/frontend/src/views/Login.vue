@@ -1,5 +1,4 @@
-<template>
-  <div class="login">   
+<template>   
     <div class="content">
       <h1>Login</h1>
       <form>
@@ -17,7 +16,6 @@
         <button>Sign In</button>
       </router-link>
     </div>
-  </div>
 </template>
 
 <script>
