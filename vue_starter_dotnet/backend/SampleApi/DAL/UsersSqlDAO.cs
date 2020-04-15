@@ -49,7 +49,7 @@ namespace ProductApproval.DAL
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(getUserSql, conn);
-                cmd.Parameters.AddWithValue("@username", user.Username);
+                cmd.Parameters.AddWithValue("@username", username);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
