@@ -9,10 +9,13 @@
       <router-link :to="{name: 'edit'}" class="edit" tag="button">Edit</router-link> -->
       <router-link :to="{name: 'user-management'}" class="user-management" tag="button">User Management</router-link>
       <router-view />
+      </div>
     <div class="content">
       <navbar/>
       <h1>Welcome</h1>
+      </div>
     </div>
+    
 </template>
 
 <script>
