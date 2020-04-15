@@ -21,6 +21,5 @@ namespace ProductApprovalTests.Tests
             Assert.AreEqual(expectedResult, testResult);
         }
 
-
     }
 }
