@@ -21,5 +21,35 @@ namespace ProductApprovalTests.Tests
             Assert.AreEqual(expectedResult, testResult);
         }
 
+        [TestMethod]
+        public void AddUserTest()
+        {
+            UsersSqlDAO dao = new UsersSqlDAO(connectionString);
+            IList<User> allUsers = dao.GetAllUsers();
+            int testResult = allUsers.Count;
+            int expectedResult = GetRowCount("users");
+            Assert.AreEqual(expectedResult, testResult);
+        }
+
+        [TestMethod]
+        public void UpdateUserTest()
+        {
+            UsersSqlDAO dao = new UsersSqlDAO(connectionString);
+            IList<User> allUsers = dao.GetAllUsers();
+            int testResult = allUsers.Count;
+            int expectedResult = GetRowCount("users");
+            Assert.AreEqual(expectedResult, testResult);
+        }
+
+        [TestMethod]
+        public void DeleteUserTest()
+        {
+            UsersSqlDAO dao = new UsersSqlDAO(connectionString);
+            IList<User> allUsers = dao.GetAllUsers();
+            int testResult = allUsers.Count;
+            int expectedResult = GetRowCount("users");
+            Assert.AreEqual(expectedResult, testResult);
+        }
+
     }
 }
