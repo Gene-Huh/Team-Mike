@@ -97,18 +97,19 @@ namespace ProductApproval.DAL
             return user;
         }
 
-        public User DeleteUser(User user)
+        public int DeleteUser(string userName)
         {
+            int result = 0;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(DeleteUserSql, conn);
-                cmd.Parameters.AddWithValue("@userName", user.Username);
+                cmd.Parameters.AddWithValue("@userName", userName);
 
-                cmd.ExecuteNonQuery();
+                result = cmd.ExecuteNonQuery();
 
             }
-            return user;
+            return result;
         }
 
         private User MapReadToUser(SqlDataReader reader)
