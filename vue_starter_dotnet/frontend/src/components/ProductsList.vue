@@ -1,13 +1,20 @@
 <template>
   <div class="products-display">
-    <div class="confirm">
-      <button v-on:click="confirmChanges()" id="confirm">Confirm Changes</button>
-      <router-link :to="{name: 'edit', params: {selectedItems: this.selectedItems}}" ><button id="edit">Edit Selected Items</button></router-link>
+    <div class="confirm"  v-if="listType!=''">
+      <SearchBar v-on:filter-list="handleSearch" />
+      <button v-on:click="confirmChanges()" id="confirm">
+        <font-awesome-icon icon="clipboard-check" />
+        <span v-if="listType=='Unapproved Products List'"> Approve Selected</span>
+        <span v-else> Remove Selected</span>
+        </button>
+      <router-link :to="{name: 'edit', params: {selectedItems: this.selectedItems}}" ><button id="edit">
+        <font-awesome-icon icon="edit" />
+        Edit Selected Items</button></router-link>
       
     </div>
-    <table>
+    <table v-if="listType!=''">
       <caption>
-        <h2>{{title}}</h2>
+        <h2>{{listType}}</h2>
       </caption>
       <thead>
         <th>Select</th>
@@ -50,20 +57,30 @@
 </template>
 
 <script>
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import SearchBar from "@/components/Searchbar";
 export default {
   name: "products-list",
+  components: {
+    FontAwesomeIcon,
+    SearchBar
+  },
   props: {
-    title: String,
-    search: String,
+    listType: String,
     data: Array,
     API_URL: String
   },
   data() {
     return {
-      selectedItems: []
+      selectedItems: [],
+      search: ""
     };
   },
-  methods: {
+   methods: {
+    handleSearch(query) {
+      console.log("filter-list", query);
+      this.search = query;
+    },
     resetStatus(productNumber) {
       const checkBox = document.getElementById(productNumber);
       checkBox.checked = false;
@@ -144,11 +161,5 @@ table {
   margin: 5px;
   border-collapse: collapse;
 }
-/* hr {
-  border: 1px solid #f0ab00;
-}
-h1,
-th {
-  font-weight: 400;
-} */
+
 </style>

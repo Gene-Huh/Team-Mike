@@ -1,27 +1,25 @@
 <template>
-  <div class="products-list">
+  <div class="content">
+    <Navbar />
     <span>Select List Type:</span>
     <button v-on:click="getUnapprovedList()">Unapproved</button>
     <button v-on:click="getApprovedList()">Approved</button>
-    <SearchBar v-on:filter-list="handleSearch" />
-    <ProductsList :data="data" :search="search" :title="currentList" :API_URL="API_URL"/>
-    
+    <ProductsList :data="data" :listType="currentList" :API_URL="API_URL"/>
   </div>
 </template>
 
 <script>
 import ProductsList from "@/components/ProductsList";
-import SearchBar from "@/components/Searchbar";
+import Navbar from "@/components/Navbar";
 
 export default {
   name: "products-list",
   components: {
     ProductsList,
-    SearchBar
+    Navbar
   },
   data() {
     return {
-      search: "",
       data: [],
       currentList: "",
       API_URL: "http://localhost:64458/api",
@@ -32,10 +30,7 @@ export default {
     edit(){
       this.$router.push({name: 'edit', params:{selectedItems: this.selectedItems}})
     },
-    handleSearch(query) {
-      console.log("filter-list", query);
-      this.search = query;
-    },
+    
 
     getUnapprovedList() {
       fetch(`${this.API_URL}/products/0`)
@@ -65,14 +60,6 @@ export default {
 </script>
 
 <style>
-button {
-  margin: 1% 1% 1% 1%;
-  border-radius: 25px;
-  padding: 5px 10px;
-  font-weight: bold;
-}
-button:hover {
-  background-color: #f0ab00;
-  color: black;
-}
+
+
 </style>

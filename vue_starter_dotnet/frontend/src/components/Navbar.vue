@@ -14,6 +14,7 @@
       tag="button" v-if="$route.name!=='user-management'"
     >
     <font-awesome-icon icon = "user" /> User Management</router-link>
+    <hr />
   </div>
 </template>
 
