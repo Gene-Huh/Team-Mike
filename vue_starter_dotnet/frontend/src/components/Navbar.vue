@@ -1,7 +1,31 @@
 <template>
-<div class="navbar">
-  <router-link :to="{name: 'products-list'}" exact class="products" tag="button">Products List</router-link>
-  <router-link :to="{name: 'edit'}" class="edit" tag="button">Edit</router-link>
-</div>
+  <div class="navbar">
+    <router-link :to="{name: 'products-list'}" exact class="products" tag="button">
+      <font-awesome-icon icon="eye" /> Product List
+    </router-link>
+
+    <router-link :to="{name: 'edit'}" class="edit" tag="button">
+      <font-awesome-icon icon="edit" /> Edit Products
+    </router-link>
+
+    <router-link
+      :to="{name: 'user-management'}"
+      class="user-management"
+      tag="button"
+    >
+    <font-awesome-icon icon = "user" /> User Management</router-link>
+  </div>
 </template>
 
+<script>
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+export default {
+  name: "Navbar",
+  components: {
+    FontAwesomeIcon
+  },
+  data() {
+    return {};
+  }
+};
+</script>
