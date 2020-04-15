@@ -5,6 +5,8 @@ import Login from "./views/Login.vue";
 import ProductsList from "./views/ProductsList.vue";
 import Home from "./views/Home.vue";
 import Edit from "./views/Edit.vue";
+import UserManagement from "./views/UserManagement.vue";
+
 
 Vue.use(Router);
 
@@ -52,7 +54,15 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
-    }
+    }, 
+    {
+      path: "/user-management",
+      name: "user-management",
+      component: UserManagement,
+      meta: {
+        requiresAuth: false
+      }
+    }   
   ]
 });
 
