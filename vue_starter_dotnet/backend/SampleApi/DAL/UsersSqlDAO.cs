@@ -22,7 +22,7 @@ namespace ProductApproval.DAL
             "VALUES(@role, @userName, @password, @salt, @lastname, @firstname);";
         private string UpdateUserSql = "UPDATE users SET role = @role lastname = @lastname firstname = @firstname " +
             "WHERE userID = @id;";
-        private string DeleteUserSql = "DELETE FROM users WHERE userID = @id";
+        private string DeleteUserSql = "DELETE FROM users WHERE userName = @userName";
 
         public IList<User> GetAllUsers()
         {
@@ -84,7 +84,7 @@ namespace ProductApproval.DAL
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(DeleteUserSql, conn);
-                cmd.Parameters.AddWithValue("@userId", user.UserId);
+                cmd.Parameters.AddWithValue("@userName", user.Username);
 
                 cmd.ExecuteNonQuery();
 
