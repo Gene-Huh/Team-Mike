@@ -105,7 +105,7 @@ export default {
         password: "",
         role: "",        
       },
-       API_URL: process.env.APP_VUE_CONNECTION_STRING,
+       API_URL: "http://localhost:64458/api",
       
     };
   },
@@ -119,7 +119,7 @@ export default {
         body: JSON.stringify(this.addForm)
       })
         // .then(response => response.json())
-        .then(response => console.log(response.Body.text()));
+        .then(response => console.log(response.KEY));
       this.addForm.firstName = "";
       this.addForm.lastName = "";
       this.addForm.userName = "";

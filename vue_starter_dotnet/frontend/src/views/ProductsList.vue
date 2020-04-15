@@ -4,7 +4,7 @@
     <span>Select List Type:</span>
     <button v-on:click="getUnapprovedList()">Unapproved</button>
     <button v-on:click="getApprovedList()">Approved</button>
-    <ProductsList :data="data" :listType="currentList" :API_URL="API_URL"/>
+    <ProductsList :data="data" :listType="currentList" />
   </div>
   
 </template>
@@ -23,7 +23,6 @@ export default {
     return {
       data: [],
       currentList: "",
-      API_URL: process.env.APP_VUE_CONNECTION_STRING,
       selectedItems: []
     };
   },
