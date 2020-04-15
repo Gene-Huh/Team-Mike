@@ -1,17 +1,18 @@
 <template>
-  <div class="edit">
-
+  <div class="content">
+    <Navbar />
     <Drafts :selectedItems="selectedItems" :API_URL="API_URL" />
   </div>
 </template>
 
 <script>
 import Drafts from "@/components/Drafts.vue";
-
+import Navbar from "@/components/Navbar"
 export default {
   name: "edit",
   components: {
-    Drafts
+    Drafts,
+    Navbar
   },
   props: {
     selectedItems: []

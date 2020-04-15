@@ -1,8 +1,8 @@
 <template>
-  <div class="products-display">
+  <div class="content">
     <div class="confirm"  v-if="listType!=''">
       <SearchBar v-on:filter-list="handleSearch" />
-      <button v-on:click="confirmChanges()" id="confirm">
+      <button v-on:click="confirmChanges()">
         <font-awesome-icon icon="clipboard-check" />
         <span v-if="listType=='Unapproved Products List'"> Approve Selected</span>
         <span v-else> Remove Selected</span>

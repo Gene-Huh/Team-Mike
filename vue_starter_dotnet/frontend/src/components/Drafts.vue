@@ -1,53 +1,32 @@
 <template>
-  <div>
+  <div class="content">
     <span>Edit Items:</span>
-    <router-link to="home" tag="button">Home</router-link>
-    <button v-on:click="saveDrafts()">Save</button>
-    <button v-on:click="confirmDrafts()">Commit Changes</button>
+    <button v-on:click="saveDrafts()">
+      <span>
+        <font-awesome-icon icon="save" /> Save Drafts
+      </span>
+    </button>
+    <button v-on:click="confirmDrafts()">
+      <font-awesome-icon icon="file-export" /> Commit Changes to Database</button>
 
     <div class="body-container">
       <div class="draft-box" v-for="(item, index) in drafts" :key="index">
-        <button style="background-color: red" @dblclick="discardItem(index)">x</button>
         <span>
-          <h4>Product Number: {{ item.productNumber }}</h4>
+          <font-awesome-icon icon="minus-circle" @click="discardItem(index)" style="color: red"/>
+          Product Number: {{ item.productNumber }}
         </span>
         <label for="description">Description</label>
-        <input
-          type="text"
-          name="description"
-          v-model="item.productDescription"
-        />
+        <input type="text" name="description" v-model="item.productDescription" />
         <label for="sellable">Cross Reference</label>
-        <input
-          type="text"
-          name="crossReference"
-          v-model="item.crossReference"
-        />
+        <input type="text" name="crossReference" v-model="item.crossReference" />
         <label for="manufacturerId">Manufacturer</label>
-        <input
-          type="text"
-          name="manufacturerId"
-          v-model="item.manufacturerId"
-        />
+        <input type="text" name="manufacturerId" v-model="item.manufacturerId" />
         <label for="inventoryStatus">Inventory Status</label>
-        <input
-          type="text"
-          name="inventoryStatus"
-          v-model="item.inventoryStatus"
-        />
+        <input type="text" name="inventoryStatus" v-model="item.inventoryStatus" />
         <label for="alternativeProducts">Alternative Products</label>
-        <input
-          type="text"
-          name="alternativeProducts"
-          v-model="item.alternativeProducts"
-        />
+        <input type="text" name="alternativeProducts" v-model="item.alternativeProducts" />
         <div>
-          <input
-            type="checkbox"
-            class="checkbox"
-            name="sellable"
-            v-model="item.isSellable"
-          />
+          <input type="checkbox" class="checkbox" name="sellable" v-model="item.isSellable" />
           <label for="sellable">Approved</label>
         </div>
         <div>
@@ -60,30 +39,15 @@
           <label for="drugControlled">Drug Controlled</label>
         </div>
         <div>
-          <input
-            type="checkbox"
-            class="checkbox"
-            name="returnable"
-            v-model="item.isNonReturnable"
-          />
+          <input type="checkbox" class="checkbox" name="returnable" v-model="item.isNonReturnable" />
           <label for="returnable">Returnable</label>
         </div>
         <div>
-          <input
-            type="checkbox"
-            class="checkbox"
-            name="refrigerated"
-            v-model="item.isRefrigerated"
-          />
+          <input type="checkbox" class="checkbox" name="refrigerated" v-model="item.isRefrigerated" />
           <label for="refrigerated">Refrigerated</label>
         </div>
         <div>
-          <input
-            type="checkbox"
-            class="checkbox"
-            name="regulated"
-            v-model="item.isRegulated"
-          />
+          <input type="checkbox" class="checkbox" name="regulated" v-model="item.isRegulated" />
           <label for="regulated">Regulated</label>
         </div>
       </div>
@@ -92,8 +56,11 @@
 </template>
 
 <script>
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
 export default {
   name: "drafts",
+  components: { FontAwesomeIcon },
   data() {
     return {
       title: "Edit Drafts",
@@ -180,11 +147,10 @@ export default {
 }
 
 @media only screen and (max-width: 400px) {
-  .draft-box{
+  .draft-box {
     min-width: 20vw;
   }
-  }
-
+}
 
 input {
   width: 100%;
