@@ -28,7 +28,7 @@ namespace ProductApproval.Controllers
             return dao.GetAllUsers();
         }
 
-        [HttpPut("Edit/{username}", Name = "EditUser")]
+        [HttpPut("edit/{username}")]
         public ActionResult EditUser(string username, [FromBody]User user)
         {
             if(user.Username != null)
@@ -38,22 +38,25 @@ namespace ProductApproval.Controllers
             return Ok();
         }
 
-        [HttpPost("Add", Name = "AddUser")]
-        public ActionResult AddUser(User user)
+        [HttpPost("add", Name = "AddUser")]
+        public string AddUser(User user)
         {
+            string success = user.Username + " successfully added.";
+            string failed = "Username not valid.";
+
             User dbCheck = dao.CheckUser(user);
             if (dbCheck.Username != user.Username)
             {
                 user = dao.AddUser(user);
             }
-            //else
-            //{
-               //return username not available
-            //}
-            return Ok();
+            else
+            {
+                return failed;
+            }
+            return success;
         }
 
-        [HttpDelete("Delete/{username}", Name = "DeleteUser")]
+        [HttpDelete("delete/{username}", Name = "DeleteUser")]
         public ActionResult DeleteUser(string username, [FromBody]User user)
         {
             if (user.Username != null)
