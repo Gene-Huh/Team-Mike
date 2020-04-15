@@ -42,6 +42,23 @@ namespace ProductApproval.DAL
             return allUsers;
         }
 
+        public User GetUser(string username)
+        {
+            User user = new User();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(getUserSql, conn);
+                cmd.Parameters.AddWithValue("@username", user.Username);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    user = MapReadToUser(reader);
+                }
+            }
+            return user;
+        }
+
         public User CheckUser(User user)
         {
             User finalUser = new User();
@@ -75,8 +92,9 @@ namespace ProductApproval.DAL
                 cmd.Parameters.AddWithValue("@salt", hashedPassword.Salt);
                 cmd.Parameters.AddWithValue("@lastname", user.LastName);
                 cmd.Parameters.AddWithValue("@firstname", user.FirstName);
-                result = cmd.ExecuteNonQuery();                
+                result = cmd.ExecuteNonQuery();            
             }
+
             return result;
         }
 

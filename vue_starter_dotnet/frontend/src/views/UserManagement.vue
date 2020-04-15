@@ -149,6 +149,7 @@ export default {
 
     disableUser() {
       fetch(`${this.API_URL}/users/disable/${this.userName}`);
+      this.userName="";
     },
 
     deleteUser() {
@@ -156,6 +157,7 @@ export default {
         method: "DELETE"
       }
       );
+      this.userName="";
     }
   }
 };
