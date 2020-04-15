@@ -78,6 +78,7 @@ namespace ProductApprovalTests.Tests
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(getUserSql, conn);
+                cmd.Parameters.AddWithValue("@userName", testUser.Username);
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
