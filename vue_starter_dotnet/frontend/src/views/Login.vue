@@ -32,7 +32,7 @@ export default {
       },
       invalidCredentials: false
     };
-  },
+  }
   // methods: {
   //   login() {
   //     fetch(, {
@@ -66,8 +66,7 @@ export default {
 </script>
 
 <style scoped>
-    
-
-
-
+label {
+  padding-right: 10px;
+}
 </style>
