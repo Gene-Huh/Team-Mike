@@ -20,9 +20,9 @@ namespace ProductApproval.DAL
         private string GetAllUsersSql = "SELECT * FROM users";
         private string AddUserSql = "INSERT INTO users (role, userName, password, salt, lastname, firstname) " +
             "VALUES(@role, @userName, @password, @salt, @lastname, @firstname);";
-        private string UpdateUserSql = "UPDATE users SET role = @role lastname = @lastname firstname = @firstname " +
-            "WHERE userID = @id;";
-        private string DeleteUserSql = "DELETE FROM users WHERE userID = @id";
+        private string UpdateUserSql = "UPDATE users SET role = @role, lastname = @lastname, firstname = @firstname " +
+            "WHERE userName = @username;";
+        private string DeleteUserSql = "DELETE FROM users WHERE userName = @userName";
 
         public IList<User> GetAllUsers()
         {
@@ -68,6 +68,7 @@ namespace ProductApproval.DAL
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(UpdateUserSql, conn);
+                cmd.Parameters.AddWithValue("@username", user.Username);
                 cmd.Parameters.AddWithValue("@role", user.Role);
                 cmd.Parameters.AddWithValue("@firstName", user.FirstName);
                 cmd.Parameters.AddWithValue("@lastName", user.LastName);
@@ -84,7 +85,7 @@ namespace ProductApproval.DAL
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(DeleteUserSql, conn);
-                cmd.Parameters.AddWithValue("@userId", user.UserId);
+                cmd.Parameters.AddWithValue("@userName", user.Username);
 
                 cmd.ExecuteNonQuery();
 

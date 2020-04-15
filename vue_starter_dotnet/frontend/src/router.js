@@ -58,6 +58,7 @@ const router = new Router({
     {
       path: "/user-management",
       name: "user-management",
+      API_URL: "http://localhost:64458/api",
       component: UserManagement,
       meta: {
         requiresAuth: false
