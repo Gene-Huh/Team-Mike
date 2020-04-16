@@ -59,23 +59,6 @@ namespace ProductApproval.DAL
             return user;
         }
 
-        public User CheckUser(User user)
-        {
-            User finalUser = new User();
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand(getUserSql, conn);
-                cmd.Parameters.AddWithValue("@username", user.Username);
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    finalUser.Username = Convert.ToString(reader["userName"]);
-                }
-            }
-            return finalUser;
-        }
-
         public int AddUser(User user)
         {
             int result = 0;
@@ -90,7 +73,7 @@ namespace ProductApproval.DAL
                 cmd.Parameters.AddWithValue("@salt", user.Salt);
                 cmd.Parameters.AddWithValue("@lastname", user.LastName);
                 cmd.Parameters.AddWithValue("@firstname", user.FirstName);
-                result = cmd.ExecuteNonQuery();            
+                result = cmd.ExecuteNonQuery();
             }
 
             return result;
