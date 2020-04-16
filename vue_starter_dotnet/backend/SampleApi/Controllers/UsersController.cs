@@ -17,9 +17,12 @@ namespace ProductApproval.Controllers
     public class UsersController : ControllerBase
     {
         private IUsersDAO dao;
-        public UsersController(IUsersDAO dataAccessLayer)
+        private ITokenGenerator tokenGenerator;
+
+        public UsersController(IUsersDAO dataAccessLayer, ITokenGenerator tokenGenerator)
         {
             dao = dataAccessLayer;
+            this.tokenGenerator = tokenGenerator;
         }
 
         [HttpGet]
