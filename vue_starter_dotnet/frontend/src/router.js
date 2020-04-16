@@ -28,7 +28,7 @@ const router = new Router({
       name: "home",
       component: Home,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     },
     {
@@ -61,7 +61,7 @@ const router = new Router({
       API_URL: "http://localhost:64458/api",
       component: UserManagement,
       meta: {
-        requiresAuth: false,
+        requiresAuth: true,
         authorize: "Admin"
       }
     }   

@@ -11,7 +11,7 @@ using ProductApproval.Password_and_Authentication_Helpers;
 
 namespace ProductApproval.Controllers
 {
-    // admin, user, inactive (denied access)
+    
     [Route("api/login")]
     [ApiController]
     public class AccountController : ControllerBase
