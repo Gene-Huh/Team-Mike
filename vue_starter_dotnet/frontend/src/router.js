@@ -28,7 +28,7 @@ const router = new Router({
       name: "home",
       component: Home,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     },
     {
@@ -54,17 +54,17 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
-    }, 
+    },
     {
       path: "/user-management",
       name: "user-management",
       API_URL: "http://localhost:64458/api",
       component: UserManagement,
       meta: {
-        requiresAuth: false,
-        authorize: "Admin"
+        requiresAuth: true,
+        requiresAdmin: true
       }
-    }   
+    }
   ]
 });
 
@@ -72,14 +72,27 @@ router.beforeEach((to, from, next) => {
   // Determine if the route requires Authentication
   //const {authorize} = to.meta;
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
+  //const authorize = to.matched.some( x=> x.to.meta.requiresAdmin);
   const user = auth.getUser();
 
-  // If it does and they are not logged in, send the user to "/login"
+  // If it does and they are not logged in, send the user to "/"
   if (requiresAuth && !user) {
-    next("/login");
+    next("/");
+  } else if (to.meta.requiresAdmin) {
+    console.log("checked for authorize");
+    var jwt = require("jwt-simple");
+    let token = auth.getToken();
+    if (token) {
+      var decoded = jwt.decode(token, "TechElevatorCodingBootamp");
+      if (decoded.rol == "Admin") {
+        next();
+      } else {
+        next("/home");
+      }
+    }
   } else {
-    // Else let them go to their next destination
     next();
+    // Else let them go to their next destination
   }
 });
 
