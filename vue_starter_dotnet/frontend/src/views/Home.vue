@@ -49,11 +49,11 @@ export default {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  height: 50vh;
+  height: 60vh;
   align-items: center;
 }
 .team-mike div {
-  flex-basis: 50%;
+  flex-basis: 35%;
 }
 h3 {
   color: #f0ab00;
