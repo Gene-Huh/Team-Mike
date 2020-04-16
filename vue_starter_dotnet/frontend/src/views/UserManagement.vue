@@ -256,4 +256,7 @@ export default {
 .form-content {
   margin: 5px;
 }
+label {
+  padding-right: 10px;
+}
 </style>
