@@ -38,7 +38,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+        isAdmin () {
+            return this.currentUser && this.currentUser.role === "Admin";
+        }
+    }
+};
 </script>
 
 <style>

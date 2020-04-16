@@ -13,6 +13,5 @@ namespace ProductApproval.DAL
         User UpdateUser(User user);
         IList<User> GetAllUsers();
         User GetUser(string userName);
-        //bool IsUsernameAndPasswordValid();
     }
 }

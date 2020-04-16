@@ -6,24 +6,9 @@ using System.Threading.Tasks;
 
 namespace ProductApproval.Password_and_Authentication_Helpers
 {
-    public class HashProvider
+    public class HashProvider : IPasswordHasher
     {
-        
         private const int WorkFactor = 10000;
-
-        public class HashedPassword
-        {
-
-            public HashedPassword(string password, string salt)
-            {
-                this.Password = password;
-                this.Salt = salt;
-            }
-
-            public string Password { get; }
-
-            public string Salt { get; }
-        }
 
         public HashedPassword HashPassword(string plainTextPassword)
         {
@@ -47,6 +32,22 @@ namespace ProductApproval.Password_and_Authentication_Helpers
             string newHashedPassword = Convert.ToBase64String(hash);
 
             return (existingHashedPassword == newHashedPassword);
+        }
+
+
+
+        public class HashedPassword 
+        {
+            public HashedPassword(string password, string salt)
+            {
+                this.Password = password;
+                this.Salt = salt;
+            }
+
+            public string Password { get; }
+
+            public string Salt { get; }
+       
         }
     }
 }
