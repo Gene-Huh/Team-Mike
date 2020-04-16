@@ -23,7 +23,7 @@
       <font-awesome-icon icon="user" />User Management
     </router-link>
 
-    <router-link :to="{name: 'login'}" class="logout" tag="button">Log Out</router-link>
+    <button @click="logout" class="logout">Log Out</button>
     <hr />
   </div>
 </template>
@@ -42,6 +42,12 @@ export default {
     return {
       isAdmin: ""
     };
+  },
+  methods: {
+    logout() {
+      auth.destroyToken();
+      this.$router.push("/");
+    }
   },
   mounted() {
     let token = auth.getToken();
