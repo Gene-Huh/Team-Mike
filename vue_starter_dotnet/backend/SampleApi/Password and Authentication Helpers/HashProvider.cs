@@ -34,9 +34,10 @@ namespace ProductApproval.Password_and_Authentication_Helpers
             return (existingHashedPassword == newHashedPassword);
         }
 
+
+
         public class HashedPassword 
         {
-
             public HashedPassword(string password, string salt)
             {
                 this.Password = password;
@@ -47,7 +48,6 @@ namespace ProductApproval.Password_and_Authentication_Helpers
 
             public string Salt { get; }
        
-
         }
     }
 }

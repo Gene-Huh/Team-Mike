@@ -33,6 +33,7 @@ namespace ProductApproval.Password_and_Authentication_Helpers
 
             var token = new JwtSecurityToken(
                 claims: claims,
+                notBefore: new DateTimeOffset(DateTime.Now).DateTime,
                 expires: DateTime.Now.AddMinutes(60),
                 signingCredentials: creds);
 

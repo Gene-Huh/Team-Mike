@@ -57,16 +57,21 @@ namespace ProductApproval
 
             // Enables automatic authentication token.
             // The token is expected to be included as a bearer authentication token.
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "JwtBearer";
+                options.DefaultChallengeScheme = "JwtBearer";
+            }) 
+                .AddJwtBearer("JwtBearer", jwtOptions =>
                 {
                     // The rules for token validation
-                    options.TokenValidationParameters = new TokenValidationParameters
+                    jwtOptions.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = true,                 // issuer not required
-                        ValidateAudience = true,               // audience not required
+                        ValidateIssuer = false,                 // issuer not required
+                        ValidateAudience = false,               // audience not required
                         ValidateLifetime = true,                // token must not have expired
-                        ValidateIssuerSigningKey = true,        // token signature must match so as not to be tampered with
+                        ValidateIssuerSigningKey = true,   
+                        ClockSkew = TimeSpan.FromMinutes(5),         // token signature must match so as not to be tampered with
                         NameClaimType = System.Security.Claims.ClaimTypes.NameIdentifier,   // allows us to use sub for username
                         RoleClaimType = "rol",                  // allows us to put the role in rol
                         IssuerSigningKey = new SymmetricSecurityKey(    // each token is signed with a private key so as to ensure its validity
@@ -76,7 +81,7 @@ namespace ProductApproval
 
             // Dependency Injection configuration
             services.AddSingleton<ITokenGenerator>(tk => new JwtGenerator(Configuration["JwtSecret"]));
-            //services.AddSingleton<IPasswordHasher>(ph => new HashProvider());
+            services.AddSingleton<IPasswordHasher>(ph => new HashProvider());
 
             services.AddTransient<IProductDAO>(m => new ProductSqlDAO(Configuration.GetConnectionString("Default")));
             services.AddTransient<IUsersDAO>(m => new UsersSqlDAO(Configuration.GetConnectionString("Default")));

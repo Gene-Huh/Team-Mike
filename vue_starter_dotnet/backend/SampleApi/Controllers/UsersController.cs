@@ -12,17 +12,20 @@ using Microsoft.Extensions.Configuration;
 
 namespace ProductApproval.Controllers
 {
+    //access requires admin role && successful login
     [Route("api/users")]
     [ApiController]
     public class UsersController : ControllerBase
     {
         private IUsersDAO dao;
         private ITokenGenerator tokenGenerator;
+        private IPasswordHasher passwordHasher;
 
-        public UsersController(IUsersDAO dataAccessLayer, ITokenGenerator tokenGenerator)
+        public UsersController(IUsersDAO dataAccessLayer, IPasswordHasher passwordHasher, ITokenGenerator tokenGenerator)
         {
             dao = dataAccessLayer;
             this.tokenGenerator = tokenGenerator;
+            this.passwordHasher = passwordHasher;
         }
 
         [HttpGet]
@@ -55,20 +58,27 @@ namespace ProductApproval.Controllers
             return Ok();
         }
 
+        
         [HttpPost("add", Name = "AddUser")]
-        public string AddUser(User user)
+        public IActionResult AddUser(User user)
         {
             string success = $"{user.Username} successfully added.";
             string failed = $"{user.Username} failed to be added.";
             int response = 0;
+            HashedPassword hashedPassword = passwordHasher.HashPassword(user.Password);
 
             User dbCheck = dao.GetUser(user.Username);
+            user.Password = hashedPassword.Password;
+            user.Salt = hashedPassword.Salt;
+            
             if (dbCheck.Username != user.Username)
             {
                 response = dao.AddUser(user);
+                var token = tokenGenerator.GenerateToken(user.Username, user.Role);
+                return Ok();
             }
-
-            return (response == 1) ? success : failed;
+            
+            return Forbid();
         }
 
         [HttpDelete("delete/{username}", Name = "DeleteUser")]
