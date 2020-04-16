@@ -31,8 +31,10 @@ namespace ProductApproval.Controllers
         public IActionResult Login(AuthenticateUser model)
         {
             IActionResult result = Unauthorized();
+
             var user = userDAO.GetUser(model.Username);
-            if (user != null && passwordHasher.VerifyPasswordMatch(user.Password, model.Password, user.Salt))
+
+            if (user.Username != null && passwordHasher.VerifyPasswordMatch(user.Password, model.Password, user.Salt))
             {
                 var token = tokenGenerator.GenerateToken(user.Username, user.Role);
                 result = Ok(token);
