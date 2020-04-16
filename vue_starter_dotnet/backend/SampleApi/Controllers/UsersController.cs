@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace ProductApproval.Controllers
 {
-    //access requires admin role && successful login
+    
     [Route("api/users")]
     [ApiController]
     public class UsersController : ControllerBase
