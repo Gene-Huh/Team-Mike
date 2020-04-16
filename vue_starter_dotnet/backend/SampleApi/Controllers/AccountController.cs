@@ -27,7 +27,7 @@ namespace ProductApproval.Controllers
             this.userDAO = userDao;
         }
 
-        [HttpPost("login")]
+        [HttpPost]
         public IActionResult Login(AuthenticateUser model)
         {
             IActionResult result = Unauthorized();
