@@ -4,7 +4,7 @@
       <title>Product Approval</title>
     </header>
     <img
-      src="http://www.sarnova.com/wp-content/uploads/2014/05/Sarnova-Logo_2017_RGB-1.png"
+      src="../../public/sarnova-HD-logo.jpeg"
       id="logo"
     />
     <router-view />
