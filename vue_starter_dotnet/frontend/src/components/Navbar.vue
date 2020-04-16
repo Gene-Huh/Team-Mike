@@ -14,8 +14,12 @@
       tag="button" v-if="$route.name!=='user-management'"
     >
     <font-awesome-icon icon = "user" /> User Management</router-link>
+
+    <router-link :to="{name: 'login'}" class="logout" tag="button"> Log Out </router-link>
     <hr />
   </div>
+
+  
 </template>
 
 <script>
@@ -30,3 +34,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.logout {
+  float:right;
+}
+</style>
