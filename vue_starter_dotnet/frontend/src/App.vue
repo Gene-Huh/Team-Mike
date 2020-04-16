@@ -98,6 +98,7 @@ img {
   width: 30%;
   height: auto;
   margin-left: 20px;
+  padding: 15px;
 }
 a,
 a:visited {

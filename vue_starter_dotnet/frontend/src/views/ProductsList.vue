@@ -90,10 +90,9 @@ span {
 .confirm {
   background-color: #004165;
 }
-caption {
-  background-color: lightgoldenrodyellow;
+caption {  
   color: black;
-  width: 100vw; 
+  width: 95vw; 
 }
 
 

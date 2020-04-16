@@ -259,4 +259,7 @@ export default {
 label {
   padding-right: 10px;
 }
+span {
+  padding-right: 10px;
+}
 </style>
