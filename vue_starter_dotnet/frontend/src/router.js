@@ -28,7 +28,7 @@ const router = new Router({
       name: "home",
       component: Home,
       meta: {
-        requiresAuth: true
+        requiresAuth: false
       }
     },
     {
@@ -92,7 +92,7 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     next();
-    // Else let them go to their next destination
+    // Else let them go to their next destination   
   }
 });
 
