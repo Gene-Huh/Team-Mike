@@ -81,7 +81,7 @@
       </form>
 
       <div v-if="choice=='disableChoice'">
-        <span>Please enter username to be edited:</span>
+        <span>Please enter username to be diabled:</span>
         <input
           type="text"
           v-model="requestedUserName"
@@ -111,7 +111,7 @@
       </form>
 
       <div v-if="choice=='deleteChoice'">
-        <span>Please enter username to be edited:</span>
+        <span>Please enter username to be deleted:</span>
         <input
           type="text"
           v-model="requestedUserName"
