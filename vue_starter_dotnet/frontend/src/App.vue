@@ -3,11 +3,18 @@
     <header>
       <title>Product Approval</title>
     </header>
+
+    <nav class="main-nav">
+      <Burger />
     <img
-      src="../../public/sarnova-HD-logo.jpeg"
+      src="../public/Sarnova-Logo_2017_RGB-1.png"
       id="logo"
     />
+    <Navbar />
+    </nav>
+
     <router-view />
+    
     <div id="footer">
       <p>
         <a href="http://www.sarnova.com/privacy-policy/">Privacy Policy</a>
@@ -38,16 +45,23 @@
 </template>
 
 <script>
+import Burger from "./components/Burger";
+import Navbar from "./components/Navbar";
+
 export default {
-  computed: {
-        isAdmin () {
-            return this.currentUser && this.currentUser.role === "Admin";
-        }
-    }
+  name: "app",
+  components: {
+    Burger,
+    Navbar
+  }
 };
 </script>
 
 <style>
+html {
+  height: 100%;
+  overflow: hidden;
+}
 body {
   height: 100vh;
   width: 100vw;
@@ -115,5 +129,10 @@ a:visited {
 }
 hr {
   color: #f0ab00;
+}
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
 }
 </style>

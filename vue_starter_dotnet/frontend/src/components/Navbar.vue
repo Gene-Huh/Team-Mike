@@ -1,38 +1,43 @@
 <template>
-  <div class="navbar">
-    <router-link
-      :to="{name: 'products-list'}"
-      exact
-      class="products"
-      tag="button"
-      v-if="$route.name!=='products-list'"
-    >
-      <font-awesome-icon icon="list" />Product List
-    </router-link>
-
-    <router-link :to="{name: 'edit'}" class="edit" tag="button" v-if="$route.name!=='edit'">
-      <font-awesome-icon icon="edit" />Edit Products
-    </router-link>
-
-    <router-link
-      :to="{name: 'user-management'}"
-      class="user-management"
-      tag="button"
-      v-if="$route.name!=='user-management' && isAdmin"
-    >
-      <font-awesome-icon icon="user" />User Management
-    </router-link>
-
-    <button @click="logout" class="logout">Log Out</button>
-    <hr />
+  <div class="sidebar">
+    <div class="sidebar-backdrop" @click="closeSidebarPanel" v-if="isPanelOpen"></div>
+    <transition name="slide">
+      <div v-if="isPanelOpen" class="sidebar-panel">
+        <slot></slot>
+        <router-link
+          :to="{name: 'products-list'}"
+          exact
+          class="products"
+          v-if="$route.name!=='products-list'"
+        >
+          <font-awesome-icon icon="list" />Product List
+        </router-link>
+        <hr />
+        <router-link :to="{name: 'edit'}" class="edit" v-if="$route.name!=='edit'">
+          <font-awesome-icon icon="edit" />Edit Products
+        </router-link>
+        <hr />
+        <router-link
+          :to="{name: 'user-management'}"
+          class="user-management"
+          v-if="$route.name!=='user-management' && isAdmin"
+        >
+          <font-awesome-icon icon="user" />User Management
+        </router-link>
+        <hr />
+        <button @click="logout" class="logout">Log Out</button>
+        <hr />
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
 var jwt = require("jwt-simple");
-
+import { store, mutations } from "@/store.js";
 import auth from "../auth";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
 export default {
   name: "Navbar",
   components: {
@@ -44,9 +49,16 @@ export default {
     };
   },
   methods: {
+    closeSidebarPanel: mutations.toggleNav,
+
     logout() {
       auth.destroyToken();
       this.$router.push("/");
+    }
+  },
+  computed: {
+    isPanelOpen() {
+      return store.isNavOpen;
     }
   },
   mounted() {
@@ -59,8 +71,43 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style>
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.2s ease;
+}
+
+.slide-enter,
+.slide-leave-to {
+  transform: translateX(-100%);
+  transition: all 150ms ease-in 0s;
+}
+
+.sidebar-backdrop {
+  background-color: rgba(19, 15, 64, 0.4);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.sidebar-panel {
+  overflow-y: auto;
+  background-color: #130f40;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  z-index: 999;
+  padding: 3rem 20px 2rem 20px;
+  width: 300px;
+}
+.sidebar-panel {
+  display: block;
+}
 .logout {
-  float: right;
+  float: bottom;
 }
 </style>
