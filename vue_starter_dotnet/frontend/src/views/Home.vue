@@ -4,18 +4,22 @@
     <div class="team-mike">
       <div>
         <h3>Searra Schell</h3>
+        <img src="../../public/serras.jpg" />
         <p>https://www.linkedin.com/in/searra-schell/</p>
       </div>
       <div>
         <h3>Shabnam Ahmed</h3>
+        <img src="../../public/Shabnama.jpg" />
         <p>https://www.linkedin.com/in/shabnam-ahmed/</p>
       </div>
       <div>
         <h3>Gene Huh</h3>
+        <img src="../../public/geneh.jpg" />
         <p>https://www.linkedin.com/in/geneshuh/</p>
       </div>
       <div>
         <h3>Paul Curtin</h3>
+        <img src="../../public\paulc.jpg" />
         <p>https://www.linkedin.com/in/curtinpaul1/</p>
       </div>
     </div>
@@ -52,6 +56,11 @@ export default {
   flex-basis: 50%;
 }
 h3 {
-  color: #f0ab00
+  color: #f0ab00;
+}
+img {
+  width: 16%;
+  height: auto;
+  margin-left: 0px;
 }
 </style>
