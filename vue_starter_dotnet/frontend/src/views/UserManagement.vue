@@ -32,7 +32,7 @@
         </div>
         <div class="form-element">
           <label for="password">Password :</label>
-          <input id="password" v-model="addForm.password" type="text" required />
+          <input id="password" type="password" v-model="addForm.password" required />
         </div>
         <div class="form-element">
           <label for="role">Role:</label>

@@ -78,8 +78,6 @@ namespace ProductApproval.DAL
 
         public int AddUser(User user)
         {
-            HashProvider hp = new HashProvider();
-            HashedPassword hashedPassword = hp.HashPassword(user.Password);
             int result = 0;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -88,8 +86,8 @@ namespace ProductApproval.DAL
                 SqlCommand cmd = new SqlCommand(AddUserSql, conn);
                 cmd.Parameters.AddWithValue("@role", user.Role);
                 cmd.Parameters.AddWithValue("@userName", user.Username);
-                cmd.Parameters.AddWithValue("@password", hashedPassword.Password);
-                cmd.Parameters.AddWithValue("@salt", hashedPassword.Salt);
+                cmd.Parameters.AddWithValue("@password", user.Password);
+                cmd.Parameters.AddWithValue("@salt", user.Salt);
                 cmd.Parameters.AddWithValue("@lastname", user.LastName);
                 cmd.Parameters.AddWithValue("@firstname", user.FirstName);
                 result = cmd.ExecuteNonQuery();            
@@ -139,7 +137,8 @@ namespace ProductApproval.DAL
             user.Role = Convert.ToString(reader["role"]);
             user.LastName = Convert.ToString(reader["lastname"]);
             user.FirstName = Convert.ToString(reader["firstname"]);
-
+            user.Password = Convert.ToString(reader["password"]);
+            user.Salt = Convert.ToString(reader["salt"]);
             return user;
         }
     }

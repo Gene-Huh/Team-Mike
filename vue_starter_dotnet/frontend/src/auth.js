@@ -1,3 +1,5 @@
+
+
 export default {
   /**
    * Returns the authentication token from local storage.

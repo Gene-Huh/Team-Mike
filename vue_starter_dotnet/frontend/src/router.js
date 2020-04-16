@@ -36,7 +36,7 @@ const router = new Router({
       name: "products-list",
       component: ProductsList,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     },
     {
@@ -52,7 +52,7 @@ const router = new Router({
       name: "edit",
       component: Edit,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     }, 
     {
@@ -70,14 +70,14 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   // Determine if the route requires Authentication
-  const {authorize} = to.meta;
+  //const {authorize} = to.meta;
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth);
   const user = auth.getUser();
 
   // If it does and they are not logged in, send the user to "/login"
   if (requiresAuth && !user) {
     next("/login");
-  } else if (authorize){
+  } else {
     // Else let them go to their next destination
     next();
   }
