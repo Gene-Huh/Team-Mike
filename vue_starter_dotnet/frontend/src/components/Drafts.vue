@@ -3,16 +3,17 @@
     <span>Edit Items:</span>
     <button v-on:click="saveDrafts()">
       <span>
-        <font-awesome-icon icon="save" /> Save Drafts
+        <font-awesome-icon icon="save" />Save Drafts
       </span>
     </button>
     <button v-on:click="confirmDrafts()">
-      <font-awesome-icon icon="file-export" /> Commit Changes to Database</button>
+      <font-awesome-icon icon="file-export" />Commit Changes to Database
+    </button>
 
     <div class="body-container">
       <div class="draft-box" v-for="(item, index) in drafts" :key="index">
         <span>
-          <font-awesome-icon icon="minus-circle" @click="discardItem(index)" style="color: red"/>
+          <font-awesome-icon icon="minus-circle" @click="discardItem(index)" style="color: red" />
           Product Number: {{ item.productNumber }}
         </span>
         <label for="description">Description</label>
@@ -57,7 +58,13 @@
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
+const checkboxOptions = [
+  "isSellable",
+  "isDrugControlled",
+  "isNonReturnable",
+  "isRefrigerated",
+  "isRegulated"
+];
 export default {
   name: "drafts",
   components: { FontAwesomeIcon },
@@ -80,15 +87,24 @@ export default {
     },
     confirmDrafts() {
       if (this.drafts != null) {
-        this.drafts.forEach(product => {
-          fetch(`${this.API_URL}/item/${product.productNumber}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json; charset=utf-8"
-            },
-            body: JSON.stringify(product)
-          }).then(response => response.JSON());
-        });
+        this.drafts
+          .map(draftProduct => {
+            checkboxOptions.forEach(option => {
+              if (typeof draftProduct[option] === "boolean") {
+                draftProduct[option] = Number(draftProduct[option]);
+              }
+            });
+            return draftProduct;
+          })
+          .forEach(product => {
+            fetch(`${this.API_URL}/item/${product.productNumber}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json; charset=utf-8"
+              },
+              body: JSON.stringify(product)
+            }).then(response => response.JSON());
+          });
         this.drafts = [];
         window.localStorage.removeItem("productNumber");
       }
