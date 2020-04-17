@@ -3,7 +3,10 @@
     <div class="sidebar-backdrop" @click="closeSidebarPanel" v-if="isPanelOpen"></div>
     <transition name="slide">
       <div v-if="isPanelOpen" class="sidebar-panel">
-        <slot></slot>
+        <button @click="toggle" style="float: right; border: 0px" class="close-panel">
+        <font-awesome-icon icon="times-circle" size="2x"/>
+        </button>
+        <hr style = "border: 0px; margin-bottom: 50px;"/>
         <router-link
           :to="{name: 'products-list'}"
           exact
@@ -26,7 +29,6 @@
         </router-link>
         <hr />
         <button @click="logout" class="logout">Log Out</button>
-        <hr />
       </div>
     </transition>
   </div>
@@ -50,6 +52,10 @@ export default {
   },
   methods: {
     closeSidebarPanel: mutations.toggleNav,
+    toggle() {
+    //  this.isBurgerActive =! this.isBurgerActive;
+      mutations.toggleNav();
+    },
 
     logout() {
       auth.destroyToken();
@@ -95,7 +101,7 @@ export default {
 
 .sidebar-panel {
   overflow-y: auto;
-  background-color: #130f40;
+  background-color: #004165;
   position: fixed;
   left: 0;
   top: 0;
@@ -107,7 +113,10 @@ export default {
 .sidebar-panel {
   display: block;
 }
-.logout {
-  float: bottom;
+
+.close-panel:hover {
+  background-color: #004165;
+  color: #ffff
 }
+
 </style>

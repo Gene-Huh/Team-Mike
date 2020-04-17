@@ -2,7 +2,7 @@
   <div id="burger" :class="{ 'active' : isBurgerActive }" @click.prevent="toggle">
     <slot>
       <button type="button" class="burger-button" title="Menu">
-        <font-awesome-icon icon="bars" style="color: black"/>
+        <font-awesome-icon icon="bars" style="color: black" size="3x" />
       </button>
     </slot>
   </div>

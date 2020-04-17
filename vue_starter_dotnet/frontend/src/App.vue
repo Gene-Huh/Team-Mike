@@ -14,7 +14,7 @@
     </nav>
 
     <router-view />
-    
+
     <div id="footer">
       <p>
         <a href="http://www.sarnova.com/privacy-policy/">Privacy Policy</a>
