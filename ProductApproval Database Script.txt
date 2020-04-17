@@ -86,7 +86,7 @@ INSERT INTO ProductList (ProductNumber, ProductDescription, DefaultUOM, isSellab
 INSERT INTO ProductList (ProductNumber, ProductDescription, DefaultUOM, isSellable, CrossReference, ItemType, isDrugControlled, ManufacturerID, InventoryStatus, AlternativeProducts, isNonReturnable, isRefrigerated, isRegulated) VALUES ('0282020A','This is a generic product description','EA',1,'16228, 363-GV-2020A, 7562, WH2020A',1,1,'HARTWELL MEDICAL','Stock','',0,0,0);
 
 INSERT INTO Users (role, userName, password, salt, lastname, firstname) values('Admin', 'PaulC', 'IDdcqRJzZ0WVIqj4rJ2cUd1ORBk=', 'wxQIIXqf2iY=', 'Curtin', 'Paul');
-INSERT INTO Users (role, userName, password, salt, lastname, firstname) values('Admin', 'ShabnumA', 'IDdcqRJzZ0WVIqj4rJ2cUd1ORBk=', 'wxQIIXqf2iY=', 'Ahmed', 'Shabnum');
+INSERT INTO Users (role, userName, password, salt, lastname, firstname) values('Admin', 'ShabnamA', 'IDdcqRJzZ0WVIqj4rJ2cUd1ORBk=', 'wxQIIXqf2iY=', 'Ahmed', 'Shabnam');
 INSERT INTO Users (role, userName, password, salt, lastname, firstname) values('Admin', 'GeneH', 'IDdcqRJzZ0WVIqj4rJ2cUd1ORBk=', 'wxQIIXqf2iY=', 'Huh', 'Gene');
 INSERT INTO Users (role, userName, password, salt, lastname, firstname) values('Admin', 'SearraS', 'IDdcqRJzZ0WVIqj4rJ2cUd1ORBk=', 'wxQIIXqf2iY=', 'Schell', 'Searra');
 
