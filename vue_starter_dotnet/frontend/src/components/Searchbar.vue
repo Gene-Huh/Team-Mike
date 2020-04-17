@@ -1,7 +1,7 @@
 <template>
   <div>
     <label for="search">
-      <font-awesome-icon icon="search" />Search Filter:
+      <font-awesome-icon icon="search" /> Search Filter:
     </label>
     <input
       type="text"
@@ -39,6 +39,6 @@ label {
   margin-right: 20px;
 }
 input {
-  width: 50%;
+  width: 30%;
 }
 </style>
