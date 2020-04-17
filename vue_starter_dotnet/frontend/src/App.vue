@@ -7,11 +7,7 @@
     <nav class="main-nav">
       <Burger />
     <img
-      src="../public\Sarnova-Logo_2017_RGB-1.png"
       id="logo"
-    />
-    <Navbar />
-    </nav>
 
     <router-view />
 
