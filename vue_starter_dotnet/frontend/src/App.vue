@@ -3,10 +3,12 @@
     <header>
       <title>Product Approval</title>
     </header>
+    <router-link to="home" >
     <img
       src="../public\Sarnova-Logo_2017_RGB-1.png"
       id="logo"
     />
+    </router-link>
     <router-view />
     <div id="footer">
       <p>
@@ -98,7 +100,7 @@ img {
   width: 30%;
   height: auto;
   margin-left: 20px;
-  padding: 15px;
+  padding: 0;
 }
 a,
 a:visited {
@@ -116,5 +118,9 @@ a:visited {
 }
 hr {
   color: #f0ab00;
+}
+
+#logo {
+  padding: 10px 0 10px 20px;
 }
 </style>
